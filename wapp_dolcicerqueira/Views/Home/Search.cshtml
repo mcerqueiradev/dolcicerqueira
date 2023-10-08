@@ -1,0 +1,105 @@
+﻿@model AllModels
+
+
+<a asp-area="" asp-controller="Home" asp-action="Index" class="fixed bg-pink rounded-full bottom-4 left-4 p-3 opacity-60 hover:opacity-100 transition-opacity">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-white">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+    </svg>
+</a>
+
+
+<div class="flex flex-col mx-auto justify-center space-y-10 w-3/4 p-20">
+    <h1 class="text-3xl mb-2 text-blue font-bold">Recipes</h1>
+    <p class="text-xl m-0">
+        Search results for <strong>"@Model.SearchResults.SearchTerm"</strong>
+    </p>
+    @foreach (var recipe in Model.SearchResults.Recipes)
+    {
+        <div class="font-poppins rounded-3xl border-2 border-lightblue bg-lightblue/30 p-4">
+            <div class="mb-4">
+                <p><a href="#" class="text-blue/70 hover:text-black text-sm hover:no-underline mr-4">@recipe.Author.Username</a></p>
+                <span href="#" class="text-blue/70 hover:text-black text-xs">@recipe.Data.ToString("dd/MM/yyyy")</span>
+            </div>
+            <div class="pl-12">
+                <h2 class="text-blue hover:text-lightblue mb-2 text-2xl font-bold leading-7">
+                    <a class="hover:no-underline" href="@Url.Action("GetById", "Recipe", new { id = recipe.Id })">@recipe.Title</a>
+                </h2>
+                <div class="mb-2">
+                    <a href="#" class="text-blue/50 hover:text-black p-1 text-sm"><span class="text-opacity-50">#</span>@recipe.Category.Name</a>
+                </div>
+                <div id="description" class="mb-1 leading-6">@recipe.Description</div>
+                <div class="flex items-center justify-between">
+                    <div class="flex">
+                        <a href="#" class="hover:no-underline flex items-center text-blue/70 hover:bg-lightblue hover:text-black rounded py-1 pl-1 pr-2 text-sm">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="mr-2 w-4 h-4">
+                                <path fill-rule="evenodd" d="M4.848 2.771A49.144 49.144 0 0112 2.25c2.43 0 4.817.178 7.152.52 1.978.292 3.348 2.024 3.348 3.97v6.02c0 1.946-1.37 3.678-3.348 3.97a48.901 48.901 0 01-3.476.383.39.39 0 00-.297.17l-2.755 4.133a.75.75 0 01-1.248 0l-2.755-4.133a.39.39 0 00-.297-.17 48.9 48.9 0 01-3.476-.384c-1.978-.29-3.348-2.024-3.348-3.97V6.741c0-1.946 1.37-3.68 3.348-3.97z" clip-rule="evenodd" />
+                            </svg>
+                            @recipe.Ratings.Count()<span class="hidden md:inline">&nbsp;comments</span>
+                        </a>
+                    </div>
+                    <div class="flex items-center">
+                        <a href="@Url.Action("GetById", "Recipe", new { id = recipe.Id })" class="hover:no-underline text-white bg-blue rounded-full text-current hover:text-black hover:bg-lightblue hover:text-blue px-3.5 py-2.5 text-xs">
+                            See Recipe
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<div class="flex flex-col mx-auto justify-center space-y-10 w-3/4 p-20">
+    <h1 class="text-3xl mb-2 text-blue font-bold">Products</h1>
+    <p class="text-xl m-0">
+        Search results for <strong>"@Model.SearchResults.SearchTerm"</strong>
+    </p>
+@foreach (var product in Model.SearchResults.Products)
+{
+    <div class="font-poppins rounded-3xl border-2 border-lightblue bg-lightblue/30 p-4">
+            <div class="mb-4">
+            </div>
+            <div class="pl-12">
+                <h2 class="text-blue hover:text-lightblue mb-2 text-2xl font-bold leading-7">
+                    <a class="hover:no-underline" href="@Url.Action("GetById", "Product", new { id = product.Id })">@product.Name</a>
+                </h2>
+                <div class="mb-2">
+                    <a href="#" class="text-blue/50 hover:text-black p-1 text-sm"><span class="text-opacity-50">#</span>@product.Category.Name</a>
+                </div>
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <a href="@Url.Action("GetById", "Product", new { id = product.Id })" class="hover:no-underline text-white bg-blue rounded-full text-current hover:text-black hover:bg-lightblue hover:text-blue px-3.5 py-2.5 text-xs">
+                            See Product
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+}
+</div>
+
+
+ <script type='text/javascript'>
+    //<![CDATA[
+
+    window.addEventListener('load', function() {
+        var header = document.getElementById('header');
+        header.style.display = 'none';
+    });
+    window.addEventListener('load', function() {
+        var logoutButton = document.getElementById('logout-h');
+        logoutButton.style.display = 'none';
+    });
+
+    var div = document.getElementById('description');
+    var texto = div.innerHTML;
+    var numeroPalavras = 30; //Número de palavras permitidas
+    var palavras = texto.split(' ');
+
+    if(palavras.length > numeroPalavras) {
+      texto = palavras.slice(0,numeroPalavras).join(' ') + '...';
+    }
+
+    div.innerHTML = texto;
+
+    //]]>
+ </script>

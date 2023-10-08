@@ -1,0 +1,94 @@
+﻿@model wapp_dolcicerqueira.Domain.Entities.Recipe
+
+@{
+    ViewData["Title"] = "Update - Recipe";
+}
+
+<div class="p-20 font-poppins">
+    <div class="rounded-3xl bg-white p-20">
+        <form asp-action="UpdateRecipe" enctype="multipart/form-data" method="post">
+            <div class="space-y-12">
+                <div class=" pb-12">
+                    <h2 class="text-pink text-4xl leading-7 font-bold">Update your recipe.</h2>
+                    <p class="mt-5 text-sm leading-6">This information will be displayed publicly so be careful what you share.</p>
+                </div>
+            </div>
+            <div class="border-gray-900/10 pb-12">
+                <div class="bg-lightpink/60 p-6 rounded-3xl flex items-center">
+                    <div class="text-pink">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                             stroke="currentColor" class="w-10 h-10 mr-4">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                  d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h2 class="text-pink text-base font-semibold leading-7">Public Information</h2>
+                        <p class="text-black mt-1 text-sm leading-6">Be careful what you share.</p>
+                    </div>
+                </div>
+                <div class="mt-10 grid grid-cols-1 gap-y-8 gap-x-6 sm:grid-cols-6">
+                    <div class="col-span-6">
+                        <label asp-for="Title" class="text-gray-900 block text-sm font-medium leading-6">Title</label>
+                        <div class="mt-2">
+                            <input type="text" asp-for="Title" class="text-gray-900 ring-lightpink/60 placeholder:text-gray-400 focus:ring-pink block w-full rounded-md  p-3 shadow-sm ring-1 ring-inset focus:ring-2 focus:ring-inset text-sm leading-6" />
+                            <span asp-validation-for="Title" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-span-6">
+                        <label asp-for="Description" class="text-gray-900 block text-sm font-medium leading-6">Method of Preparation</label>
+                        <div class="mt-2">
+                            <textarea id="description" type="textarea" asp-for="Description" class="text-gray-900 ring-lightpink/60 placeholder:text-gray-400 focus:ring-pink block w-full rounded-md  p-3 shadow-sm ring-1 ring-inset focus:ring-2 focus:ring-inset text-sm leading-6"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-span-3">
+                        <label asp-for="Data" class="text-gray-900 block text-sm font-medium leading-6">Data</label>
+                        <div class="mt-2">
+                            <input asp-for="Data" type="date" class="ring-lightpink/60 placeholder:text-gray-400 focus:ring-pink block w-full rounded-md p-3 shadow-sm ring-1 ring-inset focus:ring-2 focus:ring-inset text-sm leading-6 " />
+                        </div>
+                    </div>
+                    <div class="col-span-3">
+                        <label asp-for="PreparationTime" class="text-gray-900 block text-sm font-medium leading-6">Preparation Time</label>
+                        <div class="mt-2">
+                            <input asp-for="PreparationTime" type="time" class="text-gray-900 ring-lightpink/60 placeholder:text-gray-400 focus:ring-pink block w-full rounded-md  p-3 shadow-sm ring-1 ring-inset focus:ring-2 focus:ring-inset text-sm leading-6" />
+                            <span asp-validation-for="PreparationTime" class="text-danger"></span>
+
+                        </div>
+                    </div>
+                    <div class="col-span-3">
+                        <label for="portions" class="text-gray-900 block text-sm font-medium leading-6">Portions</label>
+                        <div class="mt-2">
+                            <input asp-for="Portions" type="number" class="text-gray-900 ring-lightpink/60 placeholder:text-gray-400 focus:ring-pink block w-full rounded-md  p-3 shadow-sm ring-1 ring-inset focus:ring-2 focus:ring-inset text-sm leading-6" />
+                            <span asp-validation-for="Portions" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <input asp-for="IsApproved" type="checkbox" />
+                    <input type="hidden" name="id" asp-for="Id" hidden />
+                    <input type="hidden" name="ImageUrl" asp-for="ImageUrl" hidden />
+                    <input type="hidden" name="AuthorId" asp-for="AuthorId" hidden />
+                    <input type="hidden" name="CategoryId" asp-for="CategoryId" hidden />
+                    <input type="submit" value="Update" class="bg-pink hover:bg-lightpink rounded-md py-2 px-3 text-sm font-semibold text-white"></input>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script type='text/javascript'>
+        //<![CDATA[
+
+        window.addEventListener('load', function() {
+            var header = document.getElementById('header');
+            header.style.display = 'none';
+        });
+        window.addEventListener('load', function() {
+            var logoutButton = document.getElementById('logout-h');
+            logoutButton.style.display = 'none';
+        });
+                //]]>
+    </script>
+}

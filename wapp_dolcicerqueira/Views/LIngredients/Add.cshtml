@@ -1,0 +1,160 @@
+﻿@model wapp_dolcicerqueira.Models.AllModels
+
+@{
+    ViewData["Title"] = "Add";
+}
+
+<div class="p-20 font-poppins">
+    <div class="flex flex-row items-center justify-between bg-lightpink p-5 rounded-3xl">
+        <div class="flex itemx-center">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10 text-white mr-3">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <div>
+                <h3 class="font-semibold text-white pb-1">Recipe Ingredients</h3>
+                <p class="text-sm text-white">Recipe Builder Page</p>
+            </div>
+        </div>
+        <div class="flex itemx-center">
+            <p class="tracking-relaxed text-lg font-bold tracking-tighter text-pink">dolci cerqueira</p>
+        </div>
+        <div class="flex items-center">
+            <div class="text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                     stroke="currentColor" class="w-10 h-10 mr-3">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+                </svg>
+            </div>
+            <div>
+                <h2 class="text-white text-base font-semibold pb-1">Public Information</h2>
+                <p class="text-white text-sm leading-6">This information will be displayed be careful what you share.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="bg-card h-screen w-screen font-poppins px-20 pb-20 justify-center items-start">
+    <div class="grid grid-cols-3 gap-10">
+        <div class="col-span-1 bg-white p-10 rounded-3xl">
+            <p class="text-black/50 leading-7 font-medium mt-4">
+                <div class="text-2xl font-bold text-pink mb-4">Add ingredients to your recipe.</div>
+            <ul>
+                <li class="flex flex-row items-center mb-4"><span class="flex items-center justify-center p-4 w-12 h-12 rounded-xl bg-pink text-xl font-bold text-white mr-3">1</span>Search for the ingredient you need in the search bar.</li>
+                <li class="flex flex-row items-center mb-4"><span class="flex items-center justify-center p-4 w-12 h-12 rounded-xl bg-pink/80 text-xl font-bold text-white mr-3">2</span>Choose the ingredient that matches your recipe.</li>
+                <li class="flex flex-row items-center mb-4"><span class="flex items-center justify-center p-4 w-12 h-12 rounded-xl bg-pink/70 text-xl font-bold text-white mr-3">3</span>Input the desired quantity of the ingredient.</li>
+                <li class="flex flex-row items-center mb-4"><span class="flex items-center justify-center p-4 w-12 h-12 rounded-xl bg-pink/60 text-xl font-bold text-white mr-3">4</span>Select the measurement unit that works best for you.</li>
+                <li class="flex flex-row items-center mb-4"><span class="flex items-center justify-center p-4 w-12 h-12 rounded-xl bg-pink/50 text-xl font-bold text-white mr-3">5</span>Repeat the process for all your ingredients.</li>
+                <li class="flex flex-row items-center"><span class="flex items-center justify-center p-4 w-12 h-12 rounded-xl bg-pink/40 text-xl font-bold text-white mr-3">6</span>Click the "Go to Recipe" button to save your recipe.</li>
+            </ul>
+        </p>
+        </div>
+
+        <div class="col-span-1 rounded-3xl bg-white p-10">
+            <form asp-action="SaveIngredients">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="flex flex-col mb-4">
+                    <label asp-for="AddLIngredients.Ingredients" class="text-lg font-bold text-pink mb-2">Ingredient</label>
+                    <select class="text-sm placeholder:text-xs text-blue/80 p-3 border-b-2 border-pink/30 rounded-lg outline-none" asp-for="AddLIngredients.IngredientId" class="form-control" asp-items="@(new SelectList(Model.AddLIngredients.Ingredients, "Id", "Name"))">
+                        <option value="">Select Ingredient</option>
+                        @foreach (var ingredient in Model.AddLIngredients.Ingredients)
+                        {
+                            <option value="@ingredient.Id">@ingredient.Name</option>
+                        }
+                    </select>
+                    <span asp-validation-for="AddLIngredients.IngredientId" class="text-danger"></span>
+
+                </div>
+                <div class="flex flex-col mb-4">
+                    <label asp-for="AddLIngredients.Quantity" class="text-lg font-bold text-pink mb-2">Quantity</label>
+                    <input class="text-sm placeholder:text-xs text-blue/80 p-3 border-b-2 border-pink/30 rounded-lg outline-none" asp-for="AddLIngredients.Quantity" placeholder="Enter the quantity" class="form-control" />
+                    <span asp-validation-for="AddLIngredients.Quantity" class="text-danger"></span>
+                </div>
+                <div class="flex flex-col mb-4">
+                    <label asp-for="AddLIngredients.Measures" class="text-lg font-bold text-pink mb-2">Unit of Measure</label>
+                    <select class="text-sm placeholder:text-xs text-blue/80 p-3 border-b-2 border-pink/30 rounded-lg outline-none" asp-for="AddLIngredients.MeasureId" class="form-control" asp-items="@(new SelectList(Model.AddLIngredients.Measures, "Id", "Unit"))">
+                        <option value="">Select Measurement</option>
+                        @foreach (var measure in Model.AddLIngredients.Measures)
+                        {
+                            <option value="@measure.Id">@measure.Unit</option>
+                        }
+                    </select>
+                    <span asp-validation-for="AddLIngredients.Measures" class="text-danger"></span>
+                </div>              
+                <div class="mt-6 mb-2 flex items-center">
+                    <input type="submit" value="Insert Ingredient" class="bg-pink py-4 px-6 rounded-full font-light text-sm tracking-wider text-white" />
+                    <p class="text-xs ml-4 text-blue/70">Can't find your ingredient? <a asp-area="" asp-controller="Ingredient" asp-action="Add" class="font-medium underline">add it here</a></p>
+                </div>
+                <br />  
+                <div class="relative">
+                    <div class="bg-lightpink/60 p-6 rounded-3xl flex items-center fixed bottom-4 right-4 w-[540px] hidden" id="infoDiv">
+                        <div class="text-pink">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                 stroke="currentColor" class="w-10 h-10 mr-4">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                      d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <h2 class="text-pink text-base font-semibold leading-7">Information</h2>
+                            <p class="text-black mt-1 text-sm leading-6">Remember that your recipe needs to be approved, by clicking the "Go to Recipe" button you will be the only one that can view it until an administrator approves your recipe.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-center mt-2">
+                        <a class="w-2/3 text-center bg-pink py-4 px-6 rounded-full font-light text-sm tracking-wider text-white hover:no-underline"
+                            href="@Url.Action("GetById", "Recipe", new { id = @Model.AddLIngredients.RecipeId })"
+                            onmouseover="showInfoDiv()"
+                            onmouseout="hideInfoDiv()">Go to recipe</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="col-span-1 rounded-3xl bg-white p-10">
+            <div class="text-2xl font-bold text-pink mb-4">Ingredients added to the recipe</div>
+            <ul>
+                @foreach (var ingredients in Model.LIngredients)
+                {
+                    <li class="relative inline-flex items-center w-full mb-3">
+                        <svg class="h-6 w-6 flex-none fill-white stroke-pink stroke-2 mr-2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="11" />
+                            <path d="m8 13 2.165 2.165a1 1 0 0 0 1.521-.126L16 9" fill="none" />
+                        </svg>
+                        <span class="grow">@ingredients.Name</span>
+                        <span class="grow-0">@ingredients.Quantity @ingredients.Unit</span>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script type='text/javascript'>
+        //<![CDATA[
+
+        window.addEventListener('load', function() {
+            var header = document.getElementById('header');
+            header.style.display = 'none';
+        });
+        window.addEventListener('load', function() {
+            var logoutButton = document.getElementById('logout-h');
+            logoutButton.style.display = 'none';
+        });
+                                                            //]]>
+    </script>
+    <script>
+    function showInfoDiv() {
+        document.getElementById('infoDiv').classList.remove('hidden');
+    }
+
+    function hideInfoDiv() {
+        document.getElementById('infoDiv').classList.add('hidden');
+    }
+    </script>
+    }

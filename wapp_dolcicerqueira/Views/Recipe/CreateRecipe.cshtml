@@ -1,0 +1,179 @@
+﻿@model wapp_dolcicerqueira.Models.AllModels
+
+@{
+    ViewData["Title"] = "Create Recipe";
+}
+
+<div class="p-20 font-poppins">
+    <div class="flex flex-row items-center justify-between bg-lightpink p-5 rounded-3xl">
+        <div class="flex itemx-center">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10 text-white mr-3">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <div>
+                <h3 class="font-semibold text-white pb-1">Create your recipe</h3>
+                <p class="text-sm text-white">Recipe Builder Page</p>
+            </div>
+        </div>
+        <div class="flex itemx-center">
+            <p class="tracking-relaxed text-lg font-bold tracking-tighter text-pink">dolci cerqueira</p>
+        </div>
+        <div class="flex items-center">
+            <div class="text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                     stroke="currentColor" class="w-10 h-10 mr-3">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+                </svg>
+            </div>
+            <div>
+                <h2 class="text-white text-base font-semibold pb-1">Public Information</h2>
+                <p class="text-white text-sm leading-6">This information will be displayed be careful what you share.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="w-screen grid grid-cols-3 font-poppins gap-10 justify-center items-start px-20 pb-20">
+    <div class="col-span-1 bg-white p-20 rounded-3xl">       
+        <span class="text-3xl text-pink font-bold">Welcome to our recipe creation page!</span>
+        <p class="text-black/50 leading-7 font-medium mt-4">
+            <ul>
+                <li class="flex flex-row items-center mb-4"><span class="flex items-center justify-center p-4 w-12 h-12 rounded-xl bg-pink text-xl font-bold text-white mr-3">1</span>Fill out the form with your recipe's name, description, and instructions.</li>
+                <li class="flex flex-row items-center mb-4"><span class="flex items-center justify-center p-4 w-12 h-12 rounded-xl bg-pink/80 text-xl font-bold text-white mr-3">2</span>Click "Next" to proceed to the ingredients page.</li>
+                <li class="flex flex-row items-center mb-4"><span class="flex items-center justify-center p-4 w-12 h-12 rounded-xl bg-pink/70 text-xl font-bold text-white mr-3">3</span>Add all the necessary items for your recipe.</li>
+                <li class="flex flex-row items-center mb-4"><span class="flex items-center justify-center p-4 w-12 h-12 rounded-xl bg-pink/60 text-xl font-bold text-white mr-3">4</span>Review and adjust your recipe as needed.</li>
+                <li class="flex flex-row items-center mb-4"><span class="flex items-center justify-center p-4 w-12 h-12 rounded-xl bg-pink/50 text-xl font-bold text-white mr-3">5</span>Click "Next" to review your entire recipe.</li>
+                <li class="flex flex-row items-center"><span class="flex items-center justify-center p-4 w-12 h-12 rounded-xl bg-pink/40 text-xl font-bold text-white mr-3">6</span>Submit and save your recipe.</li>
+            </ul>
+            <span>Let's get started!</span>
+        </p>
+    </div>
+
+    <div class="col-span-2 bg-white p-20 rounded-3xl">       
+        <form asp-action="SaveRecipe" enctype="multipart/form-data">
+            <div class="space-y-12">
+                <div class=" pb-6">
+                    <h2 class="text-pink text-4xl leading-7 font-bold">Create your recipe.</h2>
+                </div>
+            </div>
+            <div class="border-gray-900/10 pb-12">
+                <div class="mt-10 grid grid-cols-1 gap-y-8 gap-x-6 sm:grid-cols-6">
+                    <div class="col-span-6">
+                        <label asp-for="Recipe.Title" class="text-black/70 block text-sm font-medium leading-6">Recipe Title<span class="text-pink">*</span></label>
+                        <div class="mt-2">
+                            <input type="text" asp-for="Recipe.Title" class="outline-none text-black/70 ring-lightpink/60 placeholder:text-black/70 focus:ring-pink block w-full rounded-md p-3 ring-1 ring-inset focus:ring-2 focus:ring-inset text-sm leading-6 bg-card" />
+                            <span asp-validation-for="Recipe.Title" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-span-6">
+                        <label asp-for="Recipe.Description" class="text-black/70 block text-sm font-medium leading-6">Method of Preparation<span class="text-pink">*</span></label>
+                        <div class="mt-2">
+                            <textarea id="description" type="textarea" asp-for="Recipe.Description" class="outline-none text-black/70 ring-lightpink/60 placeholder:text-black/70 focus:ring-pink block w-full rounded-md p-3 ring-1 ring-inset focus:ring-2 focus:ring-inset text-sm leading-6 bg-card"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-span-3">
+                        <label asp-for="Recipe.Data" class="text-black/70 block text-sm font-medium leading-6">Data<span class="text-pink">*</span></label>
+                        <div class="mt-2">
+                            <input asp-for="Recipe.Data" type="date" class="outline-none text-black/70 ring-lightpink/60 placeholder:text-black/70 focus:ring-pink block w-full rounded-md p-3 ring-1 ring-inset focus:ring-2 focus:ring-inset text-sm leading-6 bg-card" />
+                        </div>
+                    </div>
+                    <div class="col-span-3">
+                        <label asp-for="Recipe.PreparationTime" class="text-black/70 block text-sm font-medium leading-6">Preparation Time<span class="text-pink">*</span></label>
+                        <div class="mt-2">
+                            <input asp-for="Recipe.PreparationTime" type="time" class="outline-none text-black/70 ring-lightpink/60 placeholder:text-black/70 focus:ring-pink block w-full rounded-md p-3 ring-1 ring-inset focus:ring-2 focus:ring-inset text-sm leading-6 bg-card" />
+                            <span asp-validation-for="Recipe.PreparationTime" class="text-danger"></span>
+
+                        </div>
+                    </div>
+                    <div class="col-span-3">
+                        <label for="category" class="text-black/70 block text-sm font-medium leading-6">Category<span class="text-pink">*</span></label>
+                        <div class="mt-2">
+                            <select asp-for="Recipe.CategoryId" class="outline-none text-black/70 ring-lightpink/60 placeholder:text-black/70 focus:ring-pink block w-full rounded-md p-3 ring-1 ring-inset focus:ring-2 focus:ring-inset text-sm leading-6 bg-card">
+                                <option value="">Select a category</option>
+                                @foreach (var category in Model.Categories)
+                                {
+                                    <option value="@category.Id">@category.Name</option>
+                                }
+                            </select>
+                            <span asp-validation-for="Recipe.CategoryId" class="text-danger"></span>
+
+                        </div>
+                    </div>
+                    <div class="col-span-3">
+                        <label for="portions" class="text-black/70 block text-sm font-medium leading-6">Portions<span class="text-pink">*</span></label>
+                        <div class="mt-2">
+                            <input asp-for="Recipe.Portions" type="number" class="outline-none text-black/70 ring-lightpink/60 placeholder:text-black/70 focus:ring-pink block w-full rounded-md p-3 ring-1 ring-inset focus:ring-2 focus:ring-inset text-sm leading-6 bg-card" />
+                            <span asp-validation-for="Recipe.Portions" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-span-full">
+                        <label for="cover-photo" class="text-gray-900 block text-sm font-medium leading-6">Cover photo</label>
+                        <div class="border-gray-900/25 mt-2 flex justify-center rounded-lg border border-dashed px-6 py-10">
+                            <div class="text-center">
+                                <svg class="text-lightpink mx-auto h-12 w-12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                    <path fill-rule="evenodd"
+                                          d="M1.5 6a2.25 2.25 0 012.25-2.25h16.5A2.25 2.25 0 0122.5 6v12a2.25 2.25 0 01-2.25 2.25H3.75A2.25 2.25 0 011.5 18V6zM3 16.06V18c0 .414.336.75.75.75h16.5A.75.75 0 0021 18v-1.94l-2.69-2.689a1.5 1.5 0 00-2.12 0l-.88.879.97.97a.75.75 0 11-1.06 1.06l-5.16-5.159a1.5 1.5 0 00-2.12 0L3 16.061zm10.125-7.81a1.125 1.125 0 112.25 0 1.125 1.125 0 01-2.25 0z"
+                                          clip-rule="evenodd" />
+                                </svg>
+                                <div class="text-gray-600 mt-4 flex text-sm leading-6">
+                                    <label for="file-upload" class="text-indigo-600 focus-within:ring-pink hover:text-lightpink relative cursor-pointer rounded-md bg-white font-semibold focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2">
+                                        <span>Upload a file</span>
+                                        <input id="file-upload" name="recipe.Upload" type="file" class="sr-only" />
+                                    </label>
+                                    <p class="pl-1">or drag and drop</p>
+                                </div>
+                                <p class="text-gray-600 text-xs leading-5">PNG, JPG, GIF up to 10MB</p>
+                            </div>
+                        </div>
+                    </div>
+                    <input asp-for="Recipe.IsApproved" type="checkbox" hidden />
+                    <input type="submit" value="Create" class="bg-pink hover:bg-lightpink rounded-md py-2 px-3 text-sm font-semibold text-white"></input>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-rc.0/js/select2.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-rc.0/css/select2.min.css" rel="stylesheet" />
+
+    <script>
+        $(function() {
+            $('.select2').select2({
+                placeholder: "Selecione um ou mais ingredientes",
+                allowClear: true
+            });
+        });
+    </script>
+
+    <script type='text/javascript'>
+        //<![CDATA[
+
+        window.addEventListener('load', function() {
+            var header = document.getElementById('header');
+            header.style.display = 'none';
+        });
+        window.addEventListener('load', function() {
+            var logoutButton = document.getElementById('logout-h');
+            logoutButton.style.display = 'none';
+        });
+        //]]>
+    </script>
+    <script>
+        // Função para fechar o modal
+        function closeModal() {
+            document.getElementById("myModal").style.display = "none";
+        }
+
+        // Abre o modal quando a página for carregada
+        window.onload = function() {
+            document.getElementById("myModal").style.display = "block";
+            document.getElementById("bgModal").style.display = "flex";
+        };
+    </script>
+    }

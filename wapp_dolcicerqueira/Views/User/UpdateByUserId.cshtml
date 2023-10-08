@@ -1,0 +1,122 @@
+﻿@model wapp_dolcicerqueira.Domain.Entities.Users
+
+@{
+    ViewData["Title"] = "Update";
+}
+
+<div class="h-screen w-screen bg-card p-10 font-poppins">
+    <div class="rounded-3xl bg-white p-10">
+        <div class="mb-10">
+            <h1 class="text-3xl font-bold text-pink">Edit user account.</h1>
+            <p class="mt-4 text-sm text-black/60 font-medium">Please update the user information below to make changes. Remember to click 'Save' to apply the updates.</p>
+        </div>
+        <div class="grid grid-cols-2 gap-20">
+            <div class="flex items-center justify-center">
+                <div class="bg-pink w-96 h-96 aspect-square rounded-3xl overflow-hidden">
+                    @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                    {
+                        <img src="@Url.Content("~/avatar/" + Model.ImageUrl)" class="bg-cover object-cover flex w-full h-full" />
+                    }
+                    else
+                    {
+                        <span>@Html.Raw(Model.Username[0])</span>
+                    }
+                </div>
+            </div>
+            <div class="col-span-1">
+                <form asp-action="SaveUser" enctype="multipart/form-data" method="post" class="space-y-6">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="col-span-6">
+                        <label asp-for="Username" class="block text-sm font-medium text-gray-700">Name</label>
+
+                        <input asp-for="Username" type="text" id="Username" name="Username" class="mt-1 w-full rounded-md text-sm bg-card p-3 border-b-2 border-lightpink/50" />
+                        <span asp-validation-for="Username" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-span-6">
+                        <label asp-for="Email" class="block text-sm font-medium text-gray-700">Email</label>
+
+                        <input asp-for="Email" type="email" id="Email" name="email" class="mt-1 w-full rounded-md text-sm bg-card p-3 border-b-2 border-lightpink/50" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-span-6">
+                        <label asp-for="Password" class="block text-sm font-medium text-gray-700">Password</label>
+
+                        <input asp-for="Password" type="password" id="Password" name="password" class="mt-1 w-full rounded-md text-sm bg-card p-3 border-b-2 border-lightpink/50" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-10">
+                        <div class="col-span-1">
+                        <label for="cover-photo" class="text-gray-900 block text-sm font-medium leading-6">Avatar photo</label>
+                        <div class="border-gray-900/25 mt-2 flex justify-center rounded-lg border border-dashed px-6 py-10">
+                            <div class="text-center">
+                                <svg class="text-gray-300 mx-auto h-12 w-12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                    <path fill-rule="evenodd"
+                                          d="M1.5 6a2.25 2.25 0 012.25-2.25h16.5A2.25 2.25 0 0122.5 6v12a2.25 2.25 0 01-2.25 2.25H3.75A2.25 2.25 0 011.5 18V6zM3 16.06V18c0 .414.336.75.75.75h16.5A.75.75 0 0021 18v-1.94l-2.69-2.689a1.5 1.5 0 00-2.12 0l-.88.879.97.97a.75.75 0 11-1.06 1.06l-5.16-5.159a1.5 1.5 0 00-2.12 0L3 16.061zm10.125-7.81a1.125 1.125 0 112.25 0 1.125 1.125 0 01-2.25 0z"
+                                          clip-rule="evenodd" />
+                                </svg>
+                                <div class="text-gray-600 mt-4 flex text-sm leading-6">
+                                    <label for="file-upload" class="text-indigo-600 focus-within:ring-pink hover:text-lightpink relative cursor-pointer rounded-md bg-white font-semibold focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2">
+                                        <span>Upload a file</span>
+                                        <input id="file-upload" name="Upload" asp-for="Upload" type="file" class="sr-only" />
+                                    </label>
+                                    <p class="pl-1">or drag and drop</p>
+                                </div>
+                                <p class="text-gray-600 text-xs leading-5">PNG, JPG, GIF up to 10MB</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex flex-col items-start justify-center">
+                        <p class="text-black/60 text-xs mb-2">Is this user manager?</p>
+                        <div class="flex items-center mb-6">
+                            <input asp-for="UserAdmin" type="checkbox" id="UserAdmin" name="UserAdmin" class="mr-2" />
+                            <label asp-for="UserAdmin" class="m-0 text-sm font-medium text-gray-700">Manager</label>
+                        </div>
+                        <span asp-validation-for="UserAdmin" class="text-danger"></span>
+                        <p class="text-black/60 text-xs mb-2">Is this user blocked?</p>
+                        <div class="flex items-center mb-2">
+                            <input asp-for="UserBlocked" type="checkbox" id="UserBlocked" name="UserBlocked" class="mr-2" />
+                            <label asp-for="UserBlocked" class="m-0 text-sm font-medium text-gray-700">Blocked</label>
+                        </div>
+                        <span asp-validation-for="UserBlocked" class="text-danger"></span>
+                    </div>
+                    </div>
+                                 
+                    <div class="col-span-6 sm:flex sm:items-center sm:gap-4">
+                        <input type="submit" value="Save Changes" class="inline-block shrink-0 rounded-full bg-pink px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-pink focus:outline-none focus:ring" />
+                    </div>
+                    <input type="hidden" name="id" asp-for="Id" hidden />
+                    <input type="hidden" name="ImageUrl" asp-for="ImageUrl" hidden />
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script type='text/javascript'>
+    //<![CDATA[
+
+    window.addEventListener('load', function() {
+        var header = document.getElementById('header');
+        header.style.display = 'none';
+    });
+    window.addEventListener('load', function() {
+        var logoutButton = document.getElementById('logout-h');
+        logoutButton.style.display = 'none';
+    });
+    window.addEventListener('load', function() {
+        var logoutButton = document.getElementById('checklogin');
+        logoutButton.style.display = 'none';
+    });
+
+    //]]>
+</script>
+    }

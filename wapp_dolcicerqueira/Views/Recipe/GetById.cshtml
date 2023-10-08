@@ -1,0 +1,242 @@
+﻿@model wapp_dolcicerqueira.Models.AllModels
+
+@{
+
+    ViewData["Title"] = @Model.Recipe.Title;
+    var recipedata = Model.Recipe.Data.ToString("dd/MM/yyyy");
+    var preparationtime = Model.Recipe.PreparationTime.ToString("H:mm");
+}
+
+
+<a asp-area="" asp-controller="Home" asp-action="Index" class="fixed bg-pink rounded-full bottom-4 left-4 p-3 opacity-60 hover:opacity-100 transition-opacity">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-white">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+    </svg>
+</a>
+@*
+<div id="recipe" class="relative flex h-auto w-screen flex-col font-rubik">
+    <div id="recipe-img" class="aspect-video w-screen bg-lightpink bg-cover bg-center overflow-hidden flex justify-center items-center">
+        <h1 class="text-5xl font-bold text-blue text-center">@Model.Recipe.Title</h1>
+        <p class="text-xs font-semibold text-textcolor text-center">@recipedata</p>
+        <img src="@Url.Content("~/images/" + Model.Recipe.ImageUrl)" class="w-full h-full object-cover" />
+    </div>
+
+
+    <div class="grid grid-cols-6 gap-10 px-20">
+        <div class="col-span-4">
+            <h3 class="font-bold text-2xl text-blue mb-4">Method of preparation</h3>
+            <p class="mb-10 text-lg">@Model.Recipe.Description</p>
+
+            <img src="@Url.Content("~/images/" + Model.Recipe.ImageUrl)" class="aspect-video w-full h-96 object-cover object-center" />
+
+            <!-- Comment Section -->
+            <h3 class="font-bold text-2xl text-blue">Comments</h3>
+            <form class="mt-6" method="post" action="@Url.Action("AddComment", "Recipe", new { recipeId = Model.Recipe.Id })">
+                <div class="flex flex-col space-y-6">
+                    @foreach (var item in Model.Recipe.Ratings)
+                    {
+                        <div class="rounded-3xl bg-lightblue/40 p-6">
+                            <div class="flex items-center gap-3">
+                                <h3 class="font-bold text-blue">@item.Author.Username</h3>
+                                <span class="flex items-center text-sm text-blue/70">
+                                    give @item.Ratings
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="ml-1 w-4 h-4">
+                                        <path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z" clip-rule="evenodd" />
+                                    </svg>
+
+                                </span>
+                            </div>
+                            <p class="text-blue/60 mt-2">@item.Comment</p>
+                        </div>
+                    }
+                    <div class="w-full pl-8">
+                        <div class="mb-8">
+                            <h1 class="mt-6 text-xl text-pink font-bold">Add a comment</h1>
+                            <h2 class="text-base mb-8 text-blue/60">and don't forget to rate the recipe</h2>
+                            <label class="text-pink/60 mr-4" for="rating">Rate this recipe:</label>
+                            <select class="appearance-none border-4 bg-lightpink/20 border-pink/20 text-pink/60 hover:border-pink/50 pl-8 pr-6 py-3 rounded-full leading-tight focus:outline-none" id="rating" name="rating" required>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                        </div>
+                        <textarea id="comment" name="commentText" class="bg-lightblue/40 h-20 w-full resize-none rounded-3xl p-6 font-medium leading-normal focus:bg-lightblue/50 focus:outline-none placeholder:text-blue/60 text-blue/60" name="body" placeholder="Type Your Comment" required></textarea>
+                    </div>
+                    <input type="hidden" name="recipeId" value="@Model.Recipe.Id" />
+                    <div class="flex w-full justify-end px-3">
+                        <input type="submit" class="bg-pink rounded-full p-4 text-sm text-white" value="Post Comment" />
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!-- Ingredient List -->
+        <div class="col-span-2 bg-white p-10 rounded-3xl -mt-20">
+            <div class="text-2xl font-bold text-blue mb-4">Ingredients</div>
+            <ul>
+                @foreach (var ingredients in Model.Recipe.ListIngredients)
+                {
+                    <li class="relative inline-flex items-center w-full mb-3">
+                        <svg class="h-6 w-6 flex-none fill-white stroke-blue stroke-2 mr-2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="11" />
+                            <path d="m8 13 2.165 2.165a1 1 0 0 0 1.521-.126L16 9" fill="none" />
+                        </svg>
+                        <span class="grow">@ingredients.Name</span>
+                        <span class="grow-0">@ingredients.Quantity @ingredients.Unit</span>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+*@
+<div class="p-20">
+<div class="relative mx-auto max-w-screen-xl font-poppins z-0 bg-white rounded-3xl p-10">
+
+        @if(AllModels.UserCheck != null && AllModels.UserCheck.UserAdmin == true)
+        {
+            <div class="absolute right-3 top-3 flex items-center justify-center rounded-full bg-white p-2 hover:cursor-pointer">
+                <a href="@Url.Action("Update", "Recipe", new { id = Model.Recipe.Id })" class="hover:no-underline" title="Edit Recipe">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
+                    </svg>
+                </a>
+            </div>
+        }
+        <div class="grid grid-cols-2 gap-4 items-center mb-6">
+
+        <div class="col-span-1">
+            <img src="@Url.Content("~/images/" + Model.Recipe.ImageUrl)" class="aspect-square w-full rounded-3xl object-cover" />
+        </div>
+
+        <div class="col-span-1 space-y-2">
+            <h1 class="text-3xl font-bold text-blue text-center">@Model.Recipe.Title</h1>
+            <p class="text-xs font-semibold text-textcolor text-center">@recipedata</p>
+
+            <div class="grid grid-cols-3 grid-rows-2 place-items-stretch items-center justify-items-center gap-4 p-10 text-center">
+                <div class="flex flex-col justify-center items-center aspect-square w-full rounded-3xl bg-blue text-2xl text-white font-semibold p-4"><p class="text-[11px] uppercase text-white font tracking-wider">Prep. Time</p>@preparationtime</div>
+                <div class="flex flex-col justify-center items-center aspect-square w-full rounded-3xl bg-lightpink text-2xl text-white font-semibold p-4"><p class="text-[11px] uppercase text-white font tracking-wider">Portions</p>@Model.Recipe.Portions</div>
+                <div class="flex flex-col justify-center items-center aspect-square w-full rounded-3xl bg-blue text-2xl text-white font-semibold p-4"><p class="text-[11px] uppercase text-white font tracking-wider">Rating</p>
+                @if (@Model.RatingAVG == null || @Model.RatingAVG == 0)
+                    {
+                    <span>-</span>
+                    }
+                    else
+                    {
+                        @Model.RatingAVG
+                    }
+                </div>
+                <div class="flex flex-col justify-center items-center aspect-square w-full rounded-3xl bg-lightpink text-base text-white font-semibold p-4"><p class="text-[11px] uppercase text-white font tracking-wider">Category</p>@Model.Recipe.Category.Name</div>
+                <div class="flex flex-col justify-center items-center aspect-square w-full rounded-3xl bg-blue text-base text-white font-semibold p-4"><p class="text-[11px] uppercase text-white font tracking-wider">Author</p><a href="@Url.Action("GetById", "User", new { id = @Model.Recipe.AuthorId })" class="hover:no-underline">@Model.Recipe.Author.Username</a></div>
+                <div class="flex flex-col justify-center items-center aspect-square w-full rounded-3xl bg-lightpink text-2xl text-white font-semibold p-4">
+                    @if (AllModels.UserCheck != null)
+                    {
+                            <a asp-controller="Favorite" asp-action="SaveFavorite">
+                            <button type="submit" class="flex items-center justify-center hover:cursor-pointer">
+                                <div class="flex items-center justify-center text-3xl">
+                                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M352.92 80C288 80 256 144 256 144s-32-64-96.92-64c-52.76 0-94.54 44.14-95.08 96.81-1.1 109.33 86.73 187.08 183 252.42a16 16 0 0018 0c96.26-65.34 184.09-143.09 183-252.42-.54-52.67-42.32-96.81-95.08-96.81z"></path></svg>
+                                </div>
+                            </button>
+                        </a>
+                    }
+                    else
+                    {
+                        <a asp-controller="Login" asp-action="Index">
+                            <button type="submit" class="flex items-center justify-center hover:cursor-pointer">
+                                <div class="flex items-center justify-center text-3xl">
+                                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M352.92 80C288 80 256 144 256 144s-32-64-96.92-64c-52.76 0-94.54 44.14-95.08 96.81-1.1 109.33 86.73 187.08 183 252.42a16 16 0 0018 0c96.26-65.34 184.09-143.09 183-252.42-.54-52.67-42.32-96.81-95.08-96.81z"></path></svg>
+                                </div>
+                        </a>
+                    }
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="grid grid-cols-3">
+        <div class="col-span-1 p-10">
+            <div class="text-2xl font-bold text-blue mb-4">Ingredients</div>
+            <ul>
+                @foreach (var ingredients in Model.Recipe.ListIngredients)
+                {
+                    <li class="relative inline-flex items-center w-full mb-3">
+                        <svg class="h-6 w-6 flex-none fill-white stroke-blue stroke-2 mr-2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="11" />
+                            <path d="m8 13 2.165 2.165a1 1 0 0 0 1.521-.126L16 9" fill="none" />
+                        </svg>
+                        <span class="grow">@ingredients.Name</span>
+                        <span class="grow-0">@ingredients.Quantity @ingredients.Unit</span>
+                    </li>
+                }
+            </ul>
+        </div>
+        <div class="col-span-2 p-10 leading-8">
+            <h3 class="font-bold text-2xl text-pink mb-4">Method of preparation</h3>
+            <p class="mb-10">@Model.Recipe.Description</p>
+
+            <h3 class="font-bold text-2xl text-pink">Comments</h3>
+
+            <form class="mt-6" method="post" action="@Url.Action("AddComment", "Recipe", new { recipeId = Model.Recipe.Id })">
+                <div class="flex flex-col space-y-6">
+                    @foreach (var item in Model.Recipe.Ratings)
+                    {
+                        <div class="rounded-3xl bg-lightblue/40 p-6">
+                            <div class="flex items-center gap-3">
+                                <h3 class="font-bold text-blue">@item.Author.Username</h3>
+                                <span class="flex items-center text-sm text-blue/70">
+                                    give @item.Ratings
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="ml-1 w-4 h-4">
+                                        <path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z" clip-rule="evenodd" />
+                                    </svg>
+
+                                </span>
+                            </div>
+                            <p class="text-blue/60 mt-2">@item.Comment</p>
+                        </div>
+                    }
+                    <div class="w-full pl-8">
+                        <div class="mb-8">
+                            <h1 class="mt-6 text-xl text-pink font-bold">Add a comment</h1>
+                            <h2 class="text-base mb-8 text-blue/60">and don't forget to rate the recipe</h2>
+                            <label class="text-pink/60 mr-4" for="rating">Rate this recipe:</label>
+                            <select class="appearance-none border-4 bg-lightpink/20 border-pink/20 text-pink/60 hover:border-pink/50 pl-8 pr-6 py-3 rounded-full leading-tight focus:outline-none" id="rating" name="rating" required>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                        </div>
+                        <textarea id="comment" name="commentText" class="bg-lightblue/40 h-20 w-full resize-none rounded-3xl p-6 font-medium leading-normal focus:bg-lightblue/50 focus:outline-none placeholder:text-blue/60 text-blue/60" name="body" placeholder="Type Your Comment" required></textarea>
+                    </div>
+                    <input type="hidden" name="recipeId" value="@Model.Recipe.Id" />
+                    <div class="flex w-full justify-end px-3">
+                        <input type="submit" class="bg-pink rounded-full p-4 text-sm text-white" value="Post Comment" />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+
+<script type='text/javascript'>
+    //<![CDATA[
+
+    window.addEventListener('load', function() {
+        var header = document.getElementById('header');
+        header.style.display = 'none';
+    });
+    window.addEventListener('load', function() {
+        var logoutButton = document.getElementById('logout-h');
+        logoutButton.style.display = 'none';
+    });
+    window.addEventListener('load', function() {
+        var logoutButton = document.getElementById('checklogin');
+        logoutButton.style.display = 'none';
+    });
+    //]]>
+</script>

@@ -1,0 +1,18 @@
+﻿@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+
+* {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+    right: 0;
+}
+
+#recipe-img {
+    height: calc(66.6vh - 20px);
+}

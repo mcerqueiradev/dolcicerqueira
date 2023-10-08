@@ -1,0 +1,67 @@
+﻿@model wapp_dolcicerqueira.Models.AllModels
+
+@{
+    ViewData["Title"] = "Add";
+}
+
+<div class="w-8/12 mx-auto grid grid-cols-2 bg-card font-poppins gap-10 p-20">
+  <div class="col-span-1 ">
+            <form asp-action="Save" asp-controller="Ingredient" method="post" class="bg-white rounded-3xl p-10">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <input type="hidden" name="Id" value="Ingredient.Id" asp-for="Ingredient.Id"/>
+                <label asp-for="Ingredient.Name" class="text-3xl text-pink font-bold">Insert Ingredient</label>
+                <p class="text-black/50 my-6">Insert a new ingredient into the database through this page and make your recipe even more complete!</p>
+                <input asp-for="Ingredient.Name" placeholder="Insert Ingredient" class="text-sm placeholder:text-xs text-blue/80 p-4 border-b-2 border-pink/30 rounded-lg outline-none mb-8" />
+                <span asp-validation-for="Ingredient.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Insert" class="bg-pink rounded-full py-3 px-6 text-white text-sm font-light" />
+                <a asp-area="" asp-controller="LIngredients" asp-action="Add" class="ml-4 bg-pink rounded-full py-3 px-6 text-white text-sm font-light hover:no-underline">Back to your Recipe</a>
+            </div>
+        </form>
+  </div>
+  <div class="col-span-1 bg-white rounded-3xl p-10">
+  <h1 class="text-3xl text-pink font-bold mb-6">Ingredients on database.</h1>
+  <p class="text-black/50 mb-6">these are the ingredients that exist in the database</p>
+ <div class="overflow-x-auto">
+  <table class="min-w-full">
+    <thead>
+      <tr>
+        <th class="rounded-l-full px-6 py-3 bg-lightpink text-left text-xs font-medium text-white uppercase tracking-wider">ID</th>
+        <th class="rounded-r-full px-6 py-3 bg-pink text-left text-xs font-medium text-white uppercase tracking-wider">Name</th>
+      </tr>
+    </thead>
+    <tbody class="bg-white divide-y divide-black/10 text-sm text-black/50 max-h-64 overflow-y-auto">
+      @foreach (var item in Model.Ingredients)
+      {
+        <tr>
+          <td class="px-4 py-2 whitespace-nowrap">@item.Id</td>
+          <td class="px-4 py-2 whitespace-nowrap">@item.Name</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>
+
+
+</div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script type='text/javascript'>
+    //<![CDATA[
+
+    window.addEventListener('load', function() {
+        var header = document.getElementById('header');
+        header.style.display = 'none';
+    });
+    window.addEventListener('load', function() {
+        var logoutButton = document.getElementById('logout-h');
+        logoutButton.style.display = 'none';
+    });
+                                //]]>
+</script>
+}

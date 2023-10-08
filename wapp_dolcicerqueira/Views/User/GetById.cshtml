@@ -1,0 +1,302 @@
+﻿@model wapp_dolcicerqueira.Models.AllModels
+
+@{
+    ViewData["Title"] = Model.User.Username;
+}
+
+<div class="bg-card p-20 font-poppins">
+    <div class="mb-10 flex flex-row items-center justify-between rounded-3xl bg-lightpink p-5">
+        <div class="items-center flex">
+            <a asp-area="" asp-controller="Home" asp-action="Index" class="hover:no-underline">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6 text-white">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 9l-3 3m0 0l3 3m-3-3h7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+            </a>
+        </div>
+        <div class="items-center flex">
+            <p class="tracking-relaxed text-lg font-bold tracking-tighter text-pink">dolci cerqueira</p>
+        </div>
+        <div class="flex items-center">
+            <div class="text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="mr-2 h-6 w-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+            </div>
+            <div>
+                @if (wapp_dolcicerqueira.Models.AllModels.UserCheck != null)
+                {
+                    <h2 class="text-xs text-white">Hello, <span class="font-medium">@AllModels.UserCheck.Username</span></h2>
+                }
+                else
+                {
+                    <h2 class="text-xs text-white">Hello, <a asp-area="" asp-controller="Login" asp-action="Index" class="hover:no-underline font-medium">log in</a></h2>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-4 gap-10">
+        <div class="col-span-1 rounded-3xl bg-white p-10">
+            <div class="flex flex-col items-center justify-center">
+                <div class="h-32 w-32 rounded-3xl bg-pink overflow-hidden">
+                    @if (!string.IsNullOrEmpty(Model.User.ImageUrl))
+                    {
+                        <img src="@Url.Content("~/avatar/" + Model.User.ImageUrl)" class="bg-cover object-cover flex w-full h-full" />
+                    }
+                    else
+                    {
+                        <span>@Html.Raw(Model.User.Username[0])</span>
+                    }
+                </div>
+                <div class="my-6 flex flex-col items-center justify-center space-y-3">
+                    <h1 class="text-center text-2xl font-bold">@Model.User.Username</h1>
+                    @if (Model.User.UserAdmin == true)
+                    {
+                        <span class="rounded-full bg-lightpink px-3 py-2 text-xs text-pink font-medium">
+                            Manager
+                        </span>
+                    }
+                    else
+                    {
+                        <span class="rounded-full bg-lightpink px-3 py-2 text-xs text-pink font-medium">
+                            Costumer
+                        </span>
+                    }
+                </div>
+            </div>
+
+            <div class="flex items-center">
+                <div class="flex flex-1 flex-col items-start space-y-6">
+                    <div>
+                        @if (Model.Friend != null)
+                        {
+                            if (Model.Friend.UserOne == AllModels.UserCheck.Id || Model.Friend.UserTwo == Model.User.Id)
+                            {
+                                if (Model.Friend.Status == false)
+                                {
+                                    <a href="/Friends/CancelFriendRequest?id=@Model.User.Id" class="hover:no-underline font-medium">Cancel Friend Request</a>
+                                }
+                                else
+                                {
+                                    <span class="text-green-500 font-medium">Friends</span>
+                                }
+                            }
+                        }
+                        else
+                        {
+                            <a href="/Friends/AddFriend?id=@Model.User.Id" class="hover:no-underline font-medium">Add Friend</a>
+                        }
+                    </div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div class="rounded-3xl bg-lightpink/30 p-5">
+                            <h1 class="text-5xl font-bold text-pink">@Model.RecipesaApprovedById.Count()</h1>
+                            <span class="text-sm font-medium text-black/60">Recipes</span>
+                        </div>
+                        <div class="rounded-3xl bg-lightpink/30 p-5">
+                            <h1 class="text-5xl font-bold text-pink">10</h1>
+                            <span class="text-sm font-medium text-black/60">Comments</span>
+                        </div>
+                        <div class="rounded-3xl bg-lightpink/30 p-5">
+                            <h1 class="text-5xl font-bold text-pink">7</h1>
+                            <span class="text-sm font-medium text-black/60">Favorites</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-span-2">
+            <div class="mb-10 rounded-3xl bg-white p-5">
+                <div class="flex justify-center space-x-24">
+                    <div>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6 text-black/60">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                        </svg>
+                    </div>
+
+                    <div class="relative" onclick="notifications()">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6 text-black/60">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+                        </svg>
+                        <div id="not-card" class="absolute mt-2 w-80 rounded-3xl bg-white shadow p-3 hidden">
+                            @if (AllModels.UserCheck.Id == Model.User.Id)
+                            {
+                                if (Model.Friend != null)
+                                {
+                            <div id="notification" class="space-y-4">
+                                <div class="flex w-full items-center justify-between">
+                                    <span class="text-lg font-bold text-pink">Notifications</span>
+                                    <div onclick="close()" class="-mr-1 flex h-6 w-6 items-center justify-center rounded-full bg-lightpink text-white hover:bg-lightpink/50">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="h-3 w-3">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="mt-2 flex cursor-pointer items-center rounded-lg px-1 py-1">
+                                    <div class="relative flex flex-shrink-0 items-end">
+                                        <img class="h-16 w-16 rounded-full" src="https://i.pravatar.cc/300" />
+                                    </div>
+                                    <div class="ml-3">
+                                        <span class="text-sm font-semibold tracking-tight">@Model.Friend.UserTwo</span>
+                                        <p class="pt-1 text-xs italic leading-4 opacity-70">sent a friend request</p>
+                                        <span class="text-[10px] font-medium leading-4 text-blue opacity-75">a few seconds ago</span>
+                                    </div>
+                                </div>
+                            </div>
+                                }
+                            }
+                        </div>
+                    </div>
+
+                    <div>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6 text-black/60">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 8.25H7.5a2.25 2.25 0 00-2.25 2.25v9a2.25 2.25 0 002.25 2.25h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25H15m0-3l-3-3m0 0l-3 3m3-3V15" />
+                        </svg>
+                    </div>
+
+                    <div>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6 text-black/60">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" />
+                        </svg>
+                    </div>
+                </div>
+                <!-- START POST -->
+                @if (wapp_dolcicerqueira.Models.AllModels.UserCheck.Id == Model.User.Id)
+                {
+                    <div class="editor flex flex-col font-poppins mt-10">
+                        <div class="heading mb-4 text-2xl font-bold text-blue">What do you want to share today?</div>
+
+                        <input class="title mb-4 rounded-md border-b-2 border-lightblue/50 bg-card p-3 text-sm outline-none" spellcheck="false" placeholder="Title" type="text" />
+                        <textarea class="description mb-4 h-48 rounded-md border-b-2 border-lightblue/50 bg-card p-3 text-sm outline-none" spellcheck="false" placeholder="Describe everything about this post here"></textarea>
+
+                        <!-- icons -->
+                        <div class="icons mb-5 flex items-center">
+                            <ul class="flex space-x-3">
+                                <li class="rounded-full bg-lightblue p-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6 text-blue">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+                                    </svg>
+                                </li>
+                                <li class="rounded-full bg-lightblue p-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6 text-blue">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.182 15.182a4.5 4.5 0 01-6.364 0M21 12a9 9 0 11-18 0 9 9 0 0118 0zM9.75 9.75c0 .414-.168.75-.375.75S9 10.164 9 9.75 9.168 9 9.375 9s.375.336.375.75zm-.375 0h.008v.015h-.008V9.75zm5.625 0c0 .414-.168.75-.375.75s-.375-.336-.375-.75.168-.75.375-.75.375.336.375.75zm-.375 0h.008v.015h-.008V9.75z" />
+                                    </svg>
+                                </li>
+                                <li class="rounded-full bg-lightblue p-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6 text-blue">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M18.375 12.739l-7.693 7.693a4.5 4.5 0 01-6.364-6.364l10.94-10.94A3 3 0 1119.5 7.372L8.552 18.32m.009-.01l-.01.01m5.699-9.941l-7.81 7.81a1.5 1.5 0 002.112 2.13" />
+                                    </svg>
+                                </li>
+                            </ul>
+                            <div class="count text-gray-400 ml-auto text-xs font-semibold">0/300</div>
+                        </div>
+                        <!-- buttons -->
+                        <div class="buttons flex justify-end">
+                            <span class="flex items-center rounded-full p-3 text-sm transition duration-300 hover:bg-blue/30">Cancel</span>
+                            <span class="flex items-center rounded-full bg-blue text-white py-3 px-8 text-sm transition duration-300 hover:bg-blue/60">Post</span>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="rounded-3xl bg-white p-5">
+
+                <div id="recipes" class="flex flex-col">
+                    <h1 class="text-3xl mb-2 mt-6 text-blue font-bold">Timeline</h1>
+                    <p class="text-base mb-6">
+                        Here, you can view all of the recipes that have been created on your profile.
+                    </p>
+                    <div class="space-y-6">
+                        @foreach (var item in Model.RecipesaApprovedById)
+                        {
+                            <div class="mx-auto bg-white rounded-3xl" style="cursor: auto;">
+                                <div class="mt-4">
+                                    <a href="@Url.Action("GetById", "Recipe", new { id = item.Id })" class="text-2xl font-bold text-pink hover:text-pink hover:no-underline">@item.Title</a>
+                                    <div class="flex flex-row space-x-10 mt-2">
+                                        <div class="flex items-center text-black/60 font-medium">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4 mr-1">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
+                                            </svg>
+                                            <span class="text-sm">@item.Data.ToString("dd/MM/yyyy")</span>
+                                        </div>
+                                        <div class="flex items-center text-black/60 font-medium">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4 mr-1">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6a7.5 7.5 0 107.5 7.5h-7.5V6z" />
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 10.5H21A7.5 7.5 0 0013.5 3v7.5z" />
+                                            </svg>
+                                            <span class="text-sm">@item.Portions</span>
+                                        </div>
+                                        <div class="flex items-center text-black/60 font-medium">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4 mr-1">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z" />
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 6h.008v.008H6V6z" />
+                                            </svg>
+                                            <span class="text-sm">@item.Category.Name</span>
+                                        </div>
+                                    </div>
+                                    <p class="mt-2 text-sm text-black/60 font-medium leading-6">
+                                        @{
+                                            var descriptionWords = item.Description.Split(' ');
+                                            if (descriptionWords.Length > 100)
+                                            {
+                                                @string.Join(' ', item.Description.Split(' ').Take(50))
+
+                                                <span>...</span>
+                                            }
+                                            else
+                                            {
+                                                @item.Description
+                                            }
+                                        }
+                                    </p>
+                                </div>
+                                <div class="flex items-center justify-between mt-4">
+                                    <a href="@Url.Action("GetById", "Recipe", new { id = item.Id })" class="text-blue/60 hover:underline">Read more ⟶</a>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-span-1 rounded-3xl bg-white p-10">
+            <h3 class="text-2xl font-bold text-pink mb-4">Photos</h3>
+            <div class="grid grid-cols-6 col-span-2 gap-2 ">
+                @foreach (var foto in Model.RecipesaApprovedById)
+                {
+                    <div class=" overflow-hidden rounded-xl col-span-3 aspect-square">
+                        <img class="h-full w-full object-cover " src="@Url.Content("~/images/" + foto.ImageUrl)" alt="@foto.Title">
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type='text/javascript'>
+    //<![CDATA[
+    window.addEventListener('load', function () {
+        var header = document.getElementById('header');
+        header.style.display = 'none';
+    });
+    window.addEventListener('load', function () {
+        var logoutButton = document.getElementById('logout-h');
+        logoutButton.style.display = 'none';
+    });
+    window.addEventListener('load', function () {
+        var logoutButton = document.getElementById('checklogin');
+        logoutButton.style.display = 'none';
+    });
+
+    function notifications() {
+        var x = document.getElementById("not-card");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
+    }
+            //]]>
+</script>

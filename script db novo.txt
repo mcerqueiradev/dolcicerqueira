@@ -1,0 +1,1539 @@
+USE [master]
+GO
+/****** Object:  Database [DolciCerqueira]    Script Date: 20/06/2023 23:38:46 ******/
+CREATE DATABASE [DolciCerqueira]
+ CONTAINMENT = NONE
+ ON  PRIMARY 
+( NAME = N'DolciCerqueira', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL15.SQLEXPRESS\MSSQL\DATA\DolciCerqueira.mdf' , SIZE = 8192KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
+ LOG ON 
+( NAME = N'DolciCerqueira_log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL15.SQLEXPRESS\MSSQL\DATA\DolciCerqueira_log.ldf' , SIZE = 8192KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
+ WITH CATALOG_COLLATION = DATABASE_DEFAULT
+GO
+ALTER DATABASE [DolciCerqueira] SET COMPATIBILITY_LEVEL = 150
+GO
+IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
+begin
+EXEC [DolciCerqueira].[dbo].[sp_fulltext_database] @action = 'enable'
+end
+GO
+ALTER DATABASE [DolciCerqueira] SET ANSI_NULL_DEFAULT OFF 
+GO
+ALTER DATABASE [DolciCerqueira] SET ANSI_NULLS OFF 
+GO
+ALTER DATABASE [DolciCerqueira] SET ANSI_PADDING OFF 
+GO
+ALTER DATABASE [DolciCerqueira] SET ANSI_WARNINGS OFF 
+GO
+ALTER DATABASE [DolciCerqueira] SET ARITHABORT OFF 
+GO
+ALTER DATABASE [DolciCerqueira] SET AUTO_CLOSE ON 
+GO
+ALTER DATABASE [DolciCerqueira] SET AUTO_SHRINK OFF 
+GO
+ALTER DATABASE [DolciCerqueira] SET AUTO_UPDATE_STATISTICS ON 
+GO
+ALTER DATABASE [DolciCerqueira] SET CURSOR_CLOSE_ON_COMMIT OFF 
+GO
+ALTER DATABASE [DolciCerqueira] SET CURSOR_DEFAULT  GLOBAL 
+GO
+ALTER DATABASE [DolciCerqueira] SET CONCAT_NULL_YIELDS_NULL OFF 
+GO
+ALTER DATABASE [DolciCerqueira] SET NUMERIC_ROUNDABORT OFF 
+GO
+ALTER DATABASE [DolciCerqueira] SET QUOTED_IDENTIFIER OFF 
+GO
+ALTER DATABASE [DolciCerqueira] SET RECURSIVE_TRIGGERS OFF 
+GO
+ALTER DATABASE [DolciCerqueira] SET  DISABLE_BROKER 
+GO
+ALTER DATABASE [DolciCerqueira] SET AUTO_UPDATE_STATISTICS_ASYNC OFF 
+GO
+ALTER DATABASE [DolciCerqueira] SET DATE_CORRELATION_OPTIMIZATION OFF 
+GO
+ALTER DATABASE [DolciCerqueira] SET TRUSTWORTHY OFF 
+GO
+ALTER DATABASE [DolciCerqueira] SET ALLOW_SNAPSHOT_ISOLATION OFF 
+GO
+ALTER DATABASE [DolciCerqueira] SET PARAMETERIZATION SIMPLE 
+GO
+ALTER DATABASE [DolciCerqueira] SET READ_COMMITTED_SNAPSHOT OFF 
+GO
+ALTER DATABASE [DolciCerqueira] SET HONOR_BROKER_PRIORITY OFF 
+GO
+ALTER DATABASE [DolciCerqueira] SET RECOVERY FULL 
+GO
+ALTER DATABASE [DolciCerqueira] SET  MULTI_USER 
+GO
+ALTER DATABASE [DolciCerqueira] SET PAGE_VERIFY CHECKSUM  
+GO
+ALTER DATABASE [DolciCerqueira] SET DB_CHAINING OFF 
+GO
+ALTER DATABASE [DolciCerqueira] SET FILESTREAM( NON_TRANSACTED_ACCESS = OFF ) 
+GO
+ALTER DATABASE [DolciCerqueira] SET TARGET_RECOVERY_TIME = 60 SECONDS 
+GO
+ALTER DATABASE [DolciCerqueira] SET DELAYED_DURABILITY = DISABLED 
+GO
+ALTER DATABASE [DolciCerqueira] SET ACCELERATED_DATABASE_RECOVERY = OFF  
+GO
+ALTER DATABASE [DolciCerqueira] SET QUERY_STORE = OFF
+GO
+USE [DolciCerqueira]
+GO
+/****** Object:  Table [dbo].[Card]    Script Date: 20/06/2023 23:38:46 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Card](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Number] [int] NOT NULL,
+	[Name] [varchar](50) NOT NULL,
+	[Valid] [date] NOT NULL,
+	[UserId] [int] NOT NULL,
+ CONSTRAINT [PK_Card] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Category]    Script Date: 20/06/2023 23:38:46 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Category](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [varchar](50) NOT NULL,
+ CONSTRAINT [PK__Categori__19093A2BF24D4387] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Favorite]    Script Date: 20/06/2023 23:38:46 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Favorite](
+	[FavoriteId] [int] IDENTITY(1,1) NOT NULL,
+	[RecipeId] [int] NOT NULL,
+	[UserId] [int] NOT NULL,
+ CONSTRAINT [PK_Favorite] PRIMARY KEY CLUSTERED 
+(
+	[FavoriteId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Friends]    Script Date: 20/06/2023 23:38:46 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Friends](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[UserOne] [int] NOT NULL,
+	[UserTwo] [int] NOT NULL,
+	[Status] [bit] NOT NULL,
+ CONSTRAINT [PK_Friends] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Ingredient]    Script Date: 20/06/2023 23:38:46 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Ingredient](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [varchar](50) NOT NULL,
+ CONSTRAINT [PK_Ingredient] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[L_Ingredients]    Script Date: 20/06/2023 23:38:46 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[L_Ingredients](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[IngredientId] [int] NOT NULL,
+	[RecipeId] [int] NOT NULL,
+	[Quantity] [decimal](18, 0) NULL,
+	[MeasureId] [int] NULL,
+ CONSTRAINT [PK_L_Ingredients] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Measures]    Script Date: 20/06/2023 23:38:46 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Measures](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Unit] [varchar](50) NOT NULL,
+ CONSTRAINT [PK_Measures] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Order]    Script Date: 20/06/2023 23:38:46 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Order](
+	[OrderID] [int] IDENTITY(1,1) NOT NULL,
+	[FK_UserID] [int] NOT NULL,
+	[OrderStatus] [nchar](1) NOT NULL,
+	[OrderDate] [date] NOT NULL,
+	[FK_ProductID] [int] NOT NULL,
+	[FK_RatingID] [int] NULL,
+	[OrderPrice] [decimal](18, 0) NOT NULL,
+ CONSTRAINT [PK__Orders__C3905BAF90E489EB] PRIMARY KEY CLUSTERED 
+(
+	[OrderID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Post]    Script Date: 20/06/2023 23:38:46 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Post](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[title] [varchar](255) NOT NULL,
+	[content] [text] NOT NULL,
+	[author_id] [int] NOT NULL,
+	[created_at] [timestamp] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Product]    Script Date: 20/06/2023 23:38:46 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Product](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [nvarchar](60) NOT NULL,
+	[Price] [float] NOT NULL,
+	[CategoryId] [int] NOT NULL,
+ CONSTRAINT [PK__Products__B40CC6ED251FB82D] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Rating]    Script Date: 20/06/2023 23:38:46 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Rating](
+	[RatingId] [int] IDENTITY(1,1) NOT NULL,
+	[Ratings] [int] NOT NULL,
+	[RecipeId] [int] NOT NULL,
+	[Comment] [varchar](max) NULL,
+	[AuthorId] [int] NOT NULL,
+ CONSTRAINT [PK__Ratings__FCCDF85CAA1A6213] PRIMARY KEY CLUSTERED 
+(
+	[RatingId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Recipe]    Script Date: 20/06/2023 23:38:46 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Recipe](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Title] [varchar](50) NOT NULL,
+	[Description] [varchar](max) NOT NULL,
+	[AuthorId] [int] NOT NULL,
+	[Data] [date] NOT NULL,
+	[CategoryId] [int] NULL,
+	[RatingId] [int] NULL,
+	[Portions] [int] NULL,
+	[PreparationTime] [datetime] NULL,
+	[ImageUrl] [varchar](max) NULL,
+	[IsApproved] [bit] NULL,
+ CONSTRAINT [PK_Recipe] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Testimonials]    Script Date: 20/06/2023 23:38:46 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Testimonials](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [varchar](50) NOT NULL,
+	[Email] [varchar](50) NOT NULL,
+	[Message] [varchar](max) NOT NULL,
+	[Data] [date] NOT NULL,
+ CONSTRAINT [PK__Testimon__3214EC07AA2B6EE8] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Users]    Script Date: 20/06/2023 23:38:46 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Users](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Username] [varchar](50) NOT NULL,
+	[Email] [varchar](50) NOT NULL,
+	[Password] [varchar](50) NOT NULL,
+	[UserBlocked] [bit] NOT NULL,
+	[UserAdmin] [bit] NOT NULL,
+	[ImageUrl] [varchar](max) NULL,
+ CONSTRAINT [PK__Users__1788CCAC250FF334] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+SET IDENTITY_INSERT [dbo].[Category] ON 
+GO
+INSERT [dbo].[Category] ([Id], [Name]) VALUES (1, N'Birthday Cake')
+GO
+INSERT [dbo].[Category] ([Id], [Name]) VALUES (2, N'Wedding Cake')
+GO
+INSERT [dbo].[Category] ([Id], [Name]) VALUES (3, N'Simple Cake')
+GO
+INSERT [dbo].[Category] ([Id], [Name]) VALUES (4, N'Handmade Cake')
+GO
+INSERT [dbo].[Category] ([Id], [Name]) VALUES (5, N'Brigadeiro')
+GO
+INSERT [dbo].[Category] ([Id], [Name]) VALUES (6, N'Party Sweets')
+GO
+INSERT [dbo].[Category] ([Id], [Name]) VALUES (7, N'Chocolate')
+GO
+INSERT [dbo].[Category] ([Id], [Name]) VALUES (8, N'Fruits')
+GO
+INSERT [dbo].[Category] ([Id], [Name]) VALUES (9, N'Oilseeds')
+GO
+SET IDENTITY_INSERT [dbo].[Category] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Favorite] ON 
+GO
+INSERT [dbo].[Favorite] ([FavoriteId], [RecipeId], [UserId]) VALUES (6, 64, 1)
+GO
+INSERT [dbo].[Favorite] ([FavoriteId], [RecipeId], [UserId]) VALUES (7, 69, 1)
+GO
+INSERT [dbo].[Favorite] ([FavoriteId], [RecipeId], [UserId]) VALUES (8, 70, 1)
+GO
+INSERT [dbo].[Favorite] ([FavoriteId], [RecipeId], [UserId]) VALUES (9, 68, 1)
+GO
+SET IDENTITY_INSERT [dbo].[Favorite] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Friends] ON 
+GO
+INSERT [dbo].[Friends] ([Id], [UserOne], [UserTwo], [Status]) VALUES (1, 1, 7, 0)
+GO
+INSERT [dbo].[Friends] ([Id], [UserOne], [UserTwo], [Status]) VALUES (2, 1, 4, 0)
+GO
+SET IDENTITY_INSERT [dbo].[Friends] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Ingredient] ON 
+GO
+INSERT [dbo].[Ingredient] ([Id], [Name]) VALUES (9, N'Flour')
+GO
+INSERT [dbo].[Ingredient] ([Id], [Name]) VALUES (10, N'Sugar')
+GO
+INSERT [dbo].[Ingredient] ([Id], [Name]) VALUES (11, N'Brown sugar')
+GO
+INSERT [dbo].[Ingredient] ([Id], [Name]) VALUES (12, N'Baking powder')
+GO
+INSERT [dbo].[Ingredient] ([Id], [Name]) VALUES (13, N'Baking soda')
+GO
+INSERT [dbo].[Ingredient] ([Id], [Name]) VALUES (14, N'Salt')
+GO
+INSERT [dbo].[Ingredient] ([Id], [Name]) VALUES (15, N'Butter')
+GO
+INSERT [dbo].[Ingredient] ([Id], [Name]) VALUES (16, N'Eggs')
+GO
+INSERT [dbo].[Ingredient] ([Id], [Name]) VALUES (17, N'Milk')
+GO
+INSERT [dbo].[Ingredient] ([Id], [Name]) VALUES (18, N'Vanilla extract')
+GO
+INSERT [dbo].[Ingredient] ([Id], [Name]) VALUES (19, N'Cinnamon')
+GO
+INSERT [dbo].[Ingredient] ([Id], [Name]) VALUES (20, N'Nutmeg')
+GO
+INSERT [dbo].[Ingredient] ([Id], [Name]) VALUES (21, N'Cream cheese')
+GO
+INSERT [dbo].[Ingredient] ([Id], [Name]) VALUES (22, N'Powdered sugar')
+GO
+INSERT [dbo].[Ingredient] ([Id], [Name]) VALUES (23, N'Heavy cream')
+GO
+INSERT [dbo].[Ingredient] ([Id], [Name]) VALUES (24, N'Chocolate chips')
+GO
+INSERT [dbo].[Ingredient] ([Id], [Name]) VALUES (25, N'Cocoa powder')
+GO
+INSERT [dbo].[Ingredient] ([Id], [Name]) VALUES (26, N'Oil')
+GO
+INSERT [dbo].[Ingredient] ([Id], [Name]) VALUES (27, N'Cornstarch')
+GO
+INSERT [dbo].[Ingredient] ([Id], [Name]) VALUES (28, N'Yeast')
+GO
+INSERT [dbo].[Ingredient] ([Id], [Name]) VALUES (29, N'Water')
+GO
+INSERT [dbo].[Ingredient] ([Id], [Name]) VALUES (30, N'Honey')
+GO
+INSERT [dbo].[Ingredient] ([Id], [Name]) VALUES (31, N'Almond extract')
+GO
+INSERT [dbo].[Ingredient] ([Id], [Name]) VALUES (32, N'Coconut flakes')
+GO
+INSERT [dbo].[Ingredient] ([Id], [Name]) VALUES (33, N'Pecans')
+GO
+INSERT [dbo].[Ingredient] ([Id], [Name]) VALUES (34, N'Raisins')
+GO
+INSERT [dbo].[Ingredient] ([Id], [Name]) VALUES (35, N'Walnuts')
+GO
+INSERT [dbo].[Ingredient] ([Id], [Name]) VALUES (36, N'Cranberries')
+GO
+INSERT [dbo].[Ingredient] ([Id], [Name]) VALUES (37, N'Blueberries')
+GO
+INSERT [dbo].[Ingredient] ([Id], [Name]) VALUES (38, N'Strawberries')
+GO
+INSERT [dbo].[Ingredient] ([Id], [Name]) VALUES (39, N'Raspberries')
+GO
+INSERT [dbo].[Ingredient] ([Id], [Name]) VALUES (45, N'Passion Fruit')
+GO
+INSERT [dbo].[Ingredient] ([Id], [Name]) VALUES (46, N'Coconut')
+GO
+INSERT [dbo].[Ingredient] ([Id], [Name]) VALUES (47, N'Apple')
+GO
+INSERT [dbo].[Ingredient] ([Id], [Name]) VALUES (48, N'Buttermilk')
+GO
+INSERT [dbo].[Ingredient] ([Id], [Name]) VALUES (49, N'Condensed milk')
+GO
+INSERT [dbo].[Ingredient] ([Id], [Name]) VALUES (50, N'Chocolate sprinkles')
+GO
+INSERT [dbo].[Ingredient] ([Id], [Name]) VALUES (51, N'White chocolate sprinkles')
+GO
+INSERT [dbo].[Ingredient] ([Id], [Name]) VALUES (52, N'Orange Juice')
+GO
+INSERT [dbo].[Ingredient] ([Id], [Name]) VALUES (53, N'Orange Zest')
+GO
+SET IDENTITY_INSERT [dbo].[Ingredient] OFF
+GO
+SET IDENTITY_INSERT [dbo].[L_Ingredients] ON 
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (9, 1, 1, CAST(1 AS Decimal(18, 0)), 11)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (10, 2, 1, CAST(2 AS Decimal(18, 0)), 11)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (11, 3, 1, CAST(8 AS Decimal(18, 0)), 10)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (12, 1, 2, NULL, NULL)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (13, 2, 2, NULL, NULL)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (14, 3, 2, NULL, NULL)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (15, 4, 2, NULL, NULL)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (20, 0, 0, CAST(0 AS Decimal(18, 0)), 0)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (21, 0, 0, CAST(2 AS Decimal(18, 0)), 0)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (22, 14, 0, CAST(3 AS Decimal(18, 0)), 8)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (23, 19, 52, CAST(2 AS Decimal(18, 0)), 6)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (24, 10, 53, CAST(1 AS Decimal(18, 0)), 11)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (25, 25, 53, CAST(2 AS Decimal(18, 0)), 10)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (26, 10, 55, CAST(2 AS Decimal(18, 0)), 11)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (27, 16, 55, CAST(185 AS Decimal(18, 0)), 6)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (28, 9, 55, CAST(2 AS Decimal(18, 0)), 11)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (29, 26, 55, CAST(1 AS Decimal(18, 0)), 11)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (30, 27, 55, CAST(2 AS Decimal(18, 0)), 11)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (31, 17, 55, CAST(1 AS Decimal(18, 0)), 11)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (32, 12, 55, CAST(1 AS Decimal(18, 0)), 10)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (33, 14, 55, CAST(1 AS Decimal(18, 0)), 6)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (34, 23, 57, CAST(3 AS Decimal(18, 0)), 5)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (35, 9, 58, CAST(2 AS Decimal(18, 0)), 11)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (36, 10, 59, CAST(2 AS Decimal(18, 0)), 11)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (37, 16, 59, CAST(180 AS Decimal(18, 0)), 6)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (38, 9, 60, CAST(1 AS Decimal(18, 0)), 11)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (39, 10, 60, CAST(2 AS Decimal(18, 0)), 11)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (40, 46, 60, CAST(2 AS Decimal(18, 0)), 11)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (41, 9, 61, CAST(2 AS Decimal(18, 0)), 11)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (42, 25, 61, CAST(2 AS Decimal(18, 0)), 11)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (43, 17, 61, CAST(1 AS Decimal(18, 0)), 11)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (44, 24, 61, CAST(8 AS Decimal(18, 0)), 10)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (45, 16, 61, CAST(125 AS Decimal(18, 0)), 6)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (46, 15, 61, CAST(100 AS Decimal(18, 0)), 6)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (47, 10, 61, CAST(1 AS Decimal(18, 0)), 11)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (48, 12, 61, CAST(1 AS Decimal(18, 0)), 10)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (49, 9, 64, CAST(2 AS Decimal(18, 0)), 11)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (50, 10, 64, CAST(2 AS Decimal(18, 0)), 11)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (51, 19, 64, CAST(2 AS Decimal(18, 0)), 10)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (52, 18, 64, CAST(1 AS Decimal(18, 0)), 10)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (53, 47, 64, CAST(2 AS Decimal(18, 0)), 14)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (54, 16, 64, CAST(2 AS Decimal(18, 0)), 14)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (55, 15, 64, CAST(120 AS Decimal(18, 0)), 6)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (56, 17, 64, CAST(100 AS Decimal(18, 0)), 7)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (57, 12, 64, CAST(1 AS Decimal(18, 0)), 10)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (58, 14, 64, CAST(1 AS Decimal(18, 0)), 9)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (59, 9, 65, CAST(170 AS Decimal(18, 0)), 6)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (60, 25, 65, CAST(75 AS Decimal(18, 0)), 6)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (61, 11, 65, CAST(2 AS Decimal(18, 0)), 11)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (62, 12, 65, CAST(1 AS Decimal(18, 0)), 9)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (63, 13, 65, CAST(1 AS Decimal(18, 0)), 9)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (64, 48, 65, CAST(1 AS Decimal(18, 0)), 11)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (65, 26, 65, CAST(100 AS Decimal(18, 0)), 7)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (66, 16, 65, CAST(2 AS Decimal(18, 0)), 14)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (67, 18, 65, CAST(1 AS Decimal(18, 0)), 9)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (68, 29, 65, CAST(1 AS Decimal(18, 0)), 11)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (69, 16, 66, CAST(2 AS Decimal(18, 0)), 14)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (70, 26, 66, CAST(120 AS Decimal(18, 0)), 7)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (71, 10, 66, CAST(200 AS Decimal(18, 0)), 6)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (72, 9, 66, CAST(240 AS Decimal(18, 0)), 6)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (73, 27, 66, CAST(120 AS Decimal(18, 0)), 6)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (74, 17, 66, CAST(90 AS Decimal(18, 0)), 7)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (75, 14, 66, CAST(1 AS Decimal(18, 0)), 9)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (76, 14, 66, CAST(1 AS Decimal(18, 0)), 10)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (77, 9, 67, CAST(2 AS Decimal(18, 0)), 11)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (78, 12, 67, CAST(2 AS Decimal(18, 0)), 10)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (79, 14, 67, CAST(3 AS Decimal(18, 0)), 6)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (80, 15, 67, CAST(120 AS Decimal(18, 0)), 6)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (81, 10, 67, CAST(300 AS Decimal(18, 0)), 6)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (82, 16, 67, CAST(3 AS Decimal(18, 0)), 14)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (83, 18, 67, CAST(2 AS Decimal(18, 0)), 10)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (84, 17, 67, CAST(240 AS Decimal(18, 0)), 7)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (85, 49, 68, CAST(400 AS Decimal(18, 0)), 6)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (86, 25, 68, CAST(2 AS Decimal(18, 0)), 10)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (87, 15, 68, CAST(2 AS Decimal(18, 0)), 10)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (88, 50, 68, CAST(150 AS Decimal(18, 0)), 6)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (89, 49, 69, CAST(400 AS Decimal(18, 0)), 6)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (90, 38, 69, CAST(200 AS Decimal(18, 0)), 6)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (91, 15, 69, CAST(2 AS Decimal(18, 0)), 10)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (92, 51, 69, CAST(100 AS Decimal(18, 0)), 6)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (93, 9, 70, CAST(2 AS Decimal(18, 0)), 11)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (94, 12, 70, CAST(1 AS Decimal(18, 0)), 10)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (95, 13, 70, CAST(1 AS Decimal(18, 0)), 9)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (96, 14, 70, CAST(4 AS Decimal(18, 0)), 6)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (97, 15, 70, CAST(120 AS Decimal(18, 0)), 6)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (98, 11, 70, CAST(340 AS Decimal(18, 0)), 6)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (99, 16, 70, CAST(3 AS Decimal(18, 0)), 14)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (100, 52, 70, CAST(120 AS Decimal(18, 0)), 7)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (101, 53, 70, CAST(4 AS Decimal(18, 0)), 10)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (102, 48, 70, CAST(120 AS Decimal(18, 0)), 7)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (103, 49, 71, CAST(400 AS Decimal(18, 0)), 6)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (104, 32, 71, CAST(100 AS Decimal(18, 0)), 6)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (105, 15, 71, CAST(2 AS Decimal(18, 0)), 10)
+GO
+INSERT [dbo].[L_Ingredients] ([Id], [IngredientId], [RecipeId], [Quantity], [MeasureId]) VALUES (106, 32, 71, CAST(80 AS Decimal(18, 0)), 6)
+GO
+SET IDENTITY_INSERT [dbo].[L_Ingredients] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Measures] ON 
+GO
+INSERT [dbo].[Measures] ([Id], [Unit]) VALUES (5, N'kg')
+GO
+INSERT [dbo].[Measures] ([Id], [Unit]) VALUES (6, N'g')
+GO
+INSERT [dbo].[Measures] ([Id], [Unit]) VALUES (7, N'ml')
+GO
+INSERT [dbo].[Measures] ([Id], [Unit]) VALUES (8, N'L')
+GO
+INSERT [dbo].[Measures] ([Id], [Unit]) VALUES (9, N'tsp')
+GO
+INSERT [dbo].[Measures] ([Id], [Unit]) VALUES (10, N'tbsp')
+GO
+INSERT [dbo].[Measures] ([Id], [Unit]) VALUES (11, N'cup')
+GO
+INSERT [dbo].[Measures] ([Id], [Unit]) VALUES (12, N'oz')
+GO
+INSERT [dbo].[Measures] ([Id], [Unit]) VALUES (13, N'lb')
+GO
+INSERT [dbo].[Measures] ([Id], [Unit]) VALUES (14, N'Unit')
+GO
+SET IDENTITY_INSERT [dbo].[Measures] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Product] ON 
+GO
+INSERT [dbo].[Product] ([Id], [Name], [Price], [CategoryId]) VALUES (1, N'Chocolate Cake', 39.99, 3)
+GO
+INSERT [dbo].[Product] ([Id], [Name], [Price], [CategoryId]) VALUES (2, N'Lime Cake', 29.99, 4)
+GO
+INSERT [dbo].[Product] ([Id], [Name], [Price], [CategoryId]) VALUES (3, N'Corn Cake', 25.99, 4)
+GO
+INSERT [dbo].[Product] ([Id], [Name], [Price], [CategoryId]) VALUES (4, N'Yogurt Cake', 25.99, 4)
+GO
+INSERT [dbo].[Product] ([Id], [Name], [Price], [CategoryId]) VALUES (5, N'White Chocolate Cake', 39.99, 3)
+GO
+INSERT [dbo].[Product] ([Id], [Name], [Price], [CategoryId]) VALUES (6, N'Strawberry Cake', 35.99, 3)
+GO
+INSERT [dbo].[Product] ([Id], [Name], [Price], [CategoryId]) VALUES (7, N'Dark Chocolate Cake', 39.99, 3)
+GO
+INSERT [dbo].[Product] ([Id], [Name], [Price], [CategoryId]) VALUES (8, N'Coconut Cake', 25.99, 4)
+GO
+SET IDENTITY_INSERT [dbo].[Product] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Rating] ON 
+GO
+INSERT [dbo].[Rating] ([RatingId], [Ratings], [RecipeId], [Comment], [AuthorId]) VALUES (44, 5, 64, N'This cake is incredible', 7)
+GO
+INSERT [dbo].[Rating] ([RatingId], [Ratings], [RecipeId], [Comment], [AuthorId]) VALUES (45, 5, 65, N'Love this recipe!', 1)
+GO
+INSERT [dbo].[Rating] ([RatingId], [Ratings], [RecipeId], [Comment], [AuthorId]) VALUES (46, 4, 64, N'It''s a good cake!', 1)
+GO
+SET IDENTITY_INSERT [dbo].[Rating] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Recipe] ON 
+GO
+INSERT [dbo].[Recipe] ([Id], [Title], [Description], [AuthorId], [Data], [CategoryId], [RatingId], [Portions], [PreparationTime], [ImageUrl], [IsApproved]) VALUES (64, N'Apple Cake', N'Preheat the oven to 350°F (175°C). Grease a 9-inch (23cm) cake pan with butter and set aside.
+In a medium bowl, whisk together the flour, baking powder, baking soda, salt, cinnamon, and nutmeg.
+In a separate large bowl, beat the butter and sugar together until light and fluffy. Add the eggs, one at a time, and beat well after each addition.
+Gradually stir in the flour mixture, alternating with the milk, until the batter is smooth.
+Fold in the chopped apples and walnuts, if using.
+Pour the batter into the prepared cake pan and smooth the top with a spatula.
+In a small bowl, mix together the melted butter, sugar, and cinnamon for the topping.
+Drizzle the topping evenly over the cake batter.
+Bake for 50 to 55 minutes, or until a toothpick inserted into the center of the cake comes out clean.
+Let the cake cool in the pan for 10 minutes, then remove it from the pan and transfer it to a wire rack to cool completely.
+Slice and serve the apple cake as desired, perhaps with a dollop of whipped cream or a scoop of vanilla ice cream.', 1, CAST(N'2023-04-13' AS Date), 3, 0, 12, CAST(N'2023-04-13T01:30:00.000' AS DateTime), N'e0e0a509-73e2-49e4-9041-44648ab9281f.jpg', 1)
+GO
+INSERT [dbo].[Recipe] ([Id], [Title], [Description], [AuthorId], [Data], [CategoryId], [RatingId], [Portions], [PreparationTime], [ImageUrl], [IsApproved]) VALUES (65, N'Chocolate Cake', N'Preheat your oven to 350°F (175°C) and grease and flour two 9-inch round cake pans.In a large mixing bowl, sift together the flour, cocoa powder, sugar, baking powder, baking soda, and salt until well combined.In a separate mixing bowl, whisk together the buttermilk, vegetable oil, eggs, and vanilla extract until well combined.Gradually add the wet ingredients to the dry ingredients, mixing until just combined. Be careful not to overmix.Stir in the boiling water, mixing until the batter is smooth. The batter will be thin, but that''s okay.Divide the batter equally between the prepared cake pans and smooth the tops with a spatula.Bake in the preheated oven for 30-35 minutes, or until a toothpick inserted into the center of the cakes comes out clean.Remove the cakes from the oven and let them cool in the pans for 10 minutes. Then transfer the cakes to a wire rack to cool completely.Once the cakes are completely cooled, you can frost and decorate them as desired. Enjoy your delicious chocolate cake!', 7, CAST(N'2023-04-13' AS Date), 3, 0, 18, CAST(N'2023-04-14T00:50:00.000' AS DateTime), N'63551d4a-da5b-4447-9621-e30b1c404ef7.jpg', 1)
+GO
+INSERT [dbo].[Recipe] ([Id], [Title], [Description], [AuthorId], [Data], [CategoryId], [RatingId], [Portions], [PreparationTime], [ImageUrl], [IsApproved]) VALUES (66, N'Corn Cake', N'Preheat your oven to 350°F (177°C) and grease a 9-inch square baking pan.
+In a large mixing bowl, whisk together the flour, cornmeal, sugar, baking powder, baking soda, and salt until well combined.
+In a separate mixing bowl, whisk together the milk, vegetable oil, eggs, and vanilla extract until well combined.
+Gradually add the wet ingredients to the dry ingredients, mixing until just combined. Do not overmix.
+Stir in the canned corn kernels until evenly distributed throughout the batter.
+Pour the batter into the prepared baking pan and spread it out evenly.
+Bake the cake in the preheated oven for 25-30 minutes, or until a toothpick inserted into the center of the cake comes out clean.
+Remove the cake from the oven and let it cool in the pan for 10 minutes before transferring it to a wire rack to cool completely.', 1, CAST(N'2023-04-14' AS Date), 4, 0, 15, CAST(N'2023-04-25T01:15:00.000' AS DateTime), N'696833b9-940b-4ca6-9862-04322b707f46.jpg', 1)
+GO
+INSERT [dbo].[Recipe] ([Id], [Title], [Description], [AuthorId], [Data], [CategoryId], [RatingId], [Portions], [PreparationTime], [ImageUrl], [IsApproved]) VALUES (67, N'Vanilla Cake', N'Preheat the oven to 350°F (175°C) and grease and flour two 9-inch cake pans.
+
+In a medium bowl, whisk together the flour, baking powder, baking soda, and salt.
+
+In a large mixing bowl, cream the butter and sugar together until light and fluffy, about 3-4 minutes.
+
+Beat in the eggs, one at a time, until well incorporated.
+
+Stir in the vanilla extract.
+
+Gradually add in the dry ingredients, alternating with the milk, starting and ending with the dry ingredients. Mix until just combined, being careful not to overmix.
+
+Divide the batter evenly between the prepared cake pans.
+
+Bake for 25-30 minutes or until a toothpick inserted into the center of the cakes comes out clean.
+
+Remove from the oven and let cool in the pans for 10 minutes before removing from the pans and placing on a wire rack to cool completely.
+
+Once cooled, frost with your favorite frosting and enjoy!', 1, CAST(N'2023-04-26' AS Date), 1, 0, 15, CAST(N'2023-04-26T01:15:00.000' AS DateTime), N'cce4959b-4d1f-4e85-9ec8-752257ed5a6c.jpg', 1)
+GO
+INSERT [dbo].[Recipe] ([Id], [Title], [Description], [AuthorId], [Data], [CategoryId], [RatingId], [Portions], [PreparationTime], [ImageUrl], [IsApproved]) VALUES (68, N'Traditional Brigadeiro', N'In a medium saucepan, combine the condensed milk, cocoa powder, and butter.
+
+Cook over medium heat, stirring constantly with a wooden spoon, until the mixture thickens and starts to pull away from the sides of the pan, about 10-15 minutes.
+
+Remove the pan from the heat and let the mixture cool to room temperature.
+
+Using your hands, roll the mixture into small balls, about the size of a cherry.
+
+Place the chocolate sprinkles in a shallow dish and roll the brigadeiros in the sprinkles until coated.
+
+Place the brigadeiros in small paper cups or on a plate, and refrigerate for at least 30 minutes before serving.', 1, CAST(N'2023-04-26' AS Date), 5, 0, 25, CAST(N'2023-04-26T00:30:00.000' AS DateTime), N'a93f816c-8603-4601-a992-b91f3ecc38da.jpg', 1)
+GO
+INSERT [dbo].[Recipe] ([Id], [Title], [Description], [AuthorId], [Data], [CategoryId], [RatingId], [Portions], [PreparationTime], [ImageUrl], [IsApproved]) VALUES (69, N'Strawberry Brigadeiro', N'In a blender or food processor, puree the strawberries until smooth.
+In a medium saucepan, combine the condensed milk, strawberry puree, and butter.
+
+Cook over medium heat, stirring constantly with a wooden spoon, until the mixture thickens and starts to pull away from the sides of the pan, about 10-15 minutes.
+Remove the pan from the heat and let the mixture cool to room temperature.
+Using your hands, roll the mixture into small balls, about the size of a cherry.
+Place the white chocolate sprinkles in a shallow dish and roll the brigadeiros in the sprinkles until coated.
+Place the brigadeiros in small paper cups or on a plate, and refrigerate for at least 30 minutes before serving.', 1, CAST(N'2023-04-26' AS Date), 5, 0, 25, CAST(N'2023-04-26T00:30:00.000' AS DateTime), N'd6f85ad8-6b38-4552-9942-6715ad45aa22.jpg', 1)
+GO
+INSERT [dbo].[Recipe] ([Id], [Title], [Description], [AuthorId], [Data], [CategoryId], [RatingId], [Portions], [PreparationTime], [ImageUrl], [IsApproved]) VALUES (70, N'Orange Cake', N'Preheat the oven to 350°F (175°C) and grease and flour a 9-inch cake pan.
+In a medium bowl, whisk together the flour, baking powder, baking soda, and salt.
+In a large mixing bowl, cream the butter and sugar together until light and fluffy, about 3-4 minutes.
+Beat in the eggs, one at a time, until well incorporated.
+Stir in the orange zest and orange juice.
+Gradually add in the dry ingredients, alternating with the buttermilk, starting and ending with the dry ingredients. Mix until just combined, being careful not to overmix.
+
+Pour the batter into the prepared cake pan.
+Bake for 30-35 minutes or until a toothpick inserted into the center of the cake comes out clean.
+Remove from the oven and let cool in the pan for 10 minutes before removing from the pan and placing on a wire rack to cool completely.
+Once cooled, frost with your favorite frosting or a simple glaze made with powdered sugar and orange juice.', 1, CAST(N'2023-04-26' AS Date), 3, 0, 12, CAST(N'2023-04-26T01:15:00.000' AS DateTime), N'771cb669-ac8a-4b3e-bd32-a7a0850f4c06.jpg', 1)
+GO
+INSERT [dbo].[Recipe] ([Id], [Title], [Description], [AuthorId], [Data], [CategoryId], [RatingId], [Portions], [PreparationTime], [ImageUrl], [IsApproved]) VALUES (71, N'Coconut Brigadeiro', N'In a medium saucepan, combine the condensed milk, butter, and shredded coconut.
+Cook over medium heat, stirring constantly with a wooden spoon, until the mixture thickens and starts to pull away from the sides of the pan, about 10-15 minutes.
+Remove the pan from the heat and let the mixture cool to room temperature.
+Using your hands, roll the mixture into small balls, about the size of a cherry.
+Place the coconut flakes or shredded coconut in a shallow dish and roll the brigadeiros in the coconut until coated.
+Place the brigadeiros in small paper cups or on a plate, and refrigerate for at least 30 minutes before serving.', 1, CAST(N'2023-04-26' AS Date), 5, 0, 25, CAST(N'2023-04-27T00:30:00.000' AS DateTime), N'a75ece47-773d-4922-98d9-f1d13d8e06d7.jpg', 1)
+GO
+SET IDENTITY_INSERT [dbo].[Recipe] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Users] ON 
+GO
+INSERT [dbo].[Users] ([Id], [Username], [Email], [Password], [UserBlocked], [UserAdmin], [ImageUrl]) VALUES (1, N'Mateus Cerqueira', N'mateusjesus2309@gmail.com', N'admin', 0, 1, N'f5180d8a-eeb1-498c-a6eb-8c0324dc4875.png')
+GO
+INSERT [dbo].[Users] ([Id], [Username], [Email], [Password], [UserBlocked], [UserAdmin], [ImageUrl]) VALUES (2, N'Anna Clara', N'annavieira@gmail.com', N'anna123', 0, 0, NULL)
+GO
+INSERT [dbo].[Users] ([Id], [Username], [Email], [Password], [UserBlocked], [UserAdmin], [ImageUrl]) VALUES (3, N'Camila Maciel', N'camilajesuscerqueiram@gmail.com', N'camila123', 1, 0, NULL)
+GO
+INSERT [dbo].[Users] ([Id], [Username], [Email], [Password], [UserBlocked], [UserAdmin], [ImageUrl]) VALUES (4, N'Rafael Oliveira', N'rafael@gmail.com', N'admin', 0, 1, NULL)
+GO
+INSERT [dbo].[Users] ([Id], [Username], [Email], [Password], [UserBlocked], [UserAdmin], [ImageUrl]) VALUES (5, N'Rosalia Madeira', N'rosalia@gmail.com', N'rosa.2042', 0, 0, NULL)
+GO
+INSERT [dbo].[Users] ([Id], [Username], [Email], [Password], [UserBlocked], [UserAdmin], [ImageUrl]) VALUES (6, N'Carlos Peixoto', N'carlospeixoto299@gmail.com', N'19960506010203', 0, 0, NULL)
+GO
+INSERT [dbo].[Users] ([Id], [Username], [Email], [Password], [UserBlocked], [UserAdmin], [ImageUrl]) VALUES (7, N'Maria Eduarda', N'maria@gmail.com', N'admin', 0, 0, N'98a0e395-736f-4533-a1c3-fdfbd130d101.jpg')
+GO
+INSERT [dbo].[Users] ([Id], [Username], [Email], [Password], [UserBlocked], [UserAdmin], [ImageUrl]) VALUES (8, N'Mateus Jesus', N'mateusjesus@gmail.com', N'admin', 1, 0, N'f5180d8a-eeb1-498c-a6eb-8c0324dc4875.jpg')
+GO
+INSERT [dbo].[Users] ([Id], [Username], [Email], [Password], [UserBlocked], [UserAdmin], [ImageUrl]) VALUES (9, N'Joaquim Quintilha', N'joaquim@gmail.com', N'123123', 0, 0, N'29a016ca-38c2-4b24-ae6a-27da932aa2b7.jpg')
+GO
+INSERT [dbo].[Users] ([Id], [Username], [Email], [Password], [UserBlocked], [UserAdmin], [ImageUrl]) VALUES (10, N'Maria Norma', N'norma1960@outlook.com', N'norma1960', 0, 0, N'dbf4d3bd-abd6-4bcc-9d5b-64debd605007.jpg')
+GO
+SET IDENTITY_INSERT [dbo].[Users] OFF
+GO
+ALTER TABLE [dbo].[Testimonials] ADD  CONSTRAINT [DF__Testimonia__DATA__278EDA44]  DEFAULT (getdate()) FOR [Data]
+GO
+ALTER TABLE [dbo].[Order]  WITH CHECK ADD  CONSTRAINT [FK__Orders__UserId__403A8C7D] FOREIGN KEY([FK_UserID])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[Order] CHECK CONSTRAINT [FK__Orders__UserId__403A8C7D]
+GO
+ALTER TABLE [dbo].[Post]  WITH CHECK ADD FOREIGN KEY([author_id])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[Recipe]  WITH CHECK ADD  CONSTRAINT [FK_Recipe_Category] FOREIGN KEY([CategoryId])
+REFERENCES [dbo].[Category] ([Id])
+GO
+ALTER TABLE [dbo].[Recipe] CHECK CONSTRAINT [FK_Recipe_Category]
+GO
+ALTER TABLE [dbo].[Recipe]  WITH CHECK ADD  CONSTRAINT [FK_Recipe_Users] FOREIGN KEY([AuthorId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[Recipe] CHECK CONSTRAINT [FK_Recipe_Users]
+GO
+/****** Object:  StoredProcedure [dbo].[AddCard]    Script Date: 20/06/2023 23:38:46 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:       MATEUS CERQUEIRA
+-- Create date: FEB 2023
+-- Description:    Add Recipe User
+-- =============================================
+CREATE PROCEDURE [dbo].[AddCard]
+    -- Add the parameters for the stored procedure here
+    @Number AS INT,
+	@Name AS NVARCHAR(50),
+	@Valid AS DATE,
+	@UserId AS INT
+AS
+BEGIN
+INSERT INTO Card(Number, Name, Valid, UserId)
+VALUES(@Number,@Name,@Valid, @UserId)
+END
+GO
+/****** Object:  StoredProcedure [dbo].[AddFavorite]    Script Date: 20/06/2023 23:38:46 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[AddFavorite] 
+	-- Add the parameters for the stored procedure here
+	@RecipeId AS INT,
+	@UserId AS INT
+AS
+BEGIN
+	
+	INSERT INTO Favorite(RecipeId, UserId)
+	VALUES(@RecipeId, @UserId)
+END
+GO
+/****** Object:  StoredProcedure [dbo].[AddFriend]    Script Date: 20/06/2023 23:38:46 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:       MATEUS CERQUEIRA
+-- Create date: FEB 2023
+-- Description:    Add Recipe User
+-- =============================================
+CREATE PROCEDURE [dbo].[AddFriend]
+    -- Add the parameters for the stored procedure here
+    @UserOne AS INT,
+	@UserTwo AS INT,
+	@Status AS BIT
+AS
+BEGIN
+INSERT INTO Friends(UserOne, UserTwo, Status)
+VALUES(@UserOne, @UserTwo, @Status)
+END
+GO
+/****** Object:  StoredProcedure [dbo].[AddIngredient]    Script Date: 20/06/2023 23:38:46 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:       MATEUS CERQUEIRA
+-- Create date: FEB 2023
+-- Description:    Add Ingredient
+-- =============================================
+CREATE PROCEDURE [dbo].[AddIngredient]
+    -- Add the parameters for the stored procedure here
+    @Name AS VARCHAR(50)
+AS
+BEGIN
+INSERT INTO Ingredient(Name)
+VALUES(@Name)
+END
+GO
+/****** Object:  StoredProcedure [dbo].[AddListIngredients]    Script Date: 20/06/2023 23:38:46 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:       MATEUS CERQUEIRA
+-- Create date: FEB 2023
+-- Description:    Add Product
+-- =============================================
+CREATE PROCEDURE [dbo].[AddListIngredients]
+    -- Add the parameters for the stored procedure here
+    @IngredientId AS INT,
+    @RecipeId AS INT,
+	@MeasureId AS INT,
+    @Quantity AS DECIMAL NULL
+AS
+BEGIN
+INSERT INTO L_Ingredients(IngredientId, RecipeId, MeasureId, Quantity)
+VALUES(@IngredientId, @RecipeId, @MeasureId, @Quantity)
+END
+GO
+/****** Object:  StoredProcedure [dbo].[AddProduct]    Script Date: 20/06/2023 23:38:46 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:       MATEUS CERQUEIRA
+-- Create date: FEB 2023
+-- Description:    Add Product
+-- =============================================
+CREATE PROCEDURE [dbo].[AddProduct]
+    -- Add the parameters for the stored procedure here
+    @Name AS VARCHAR(50),
+    @Price AS FLOAT,
+    @CategoryId AS INT
+AS
+BEGIN
+INSERT INTO Product(Name,Price,CategoryId)
+VALUES(@Name,@Price,@CategoryId)
+END
+GO
+/****** Object:  StoredProcedure [dbo].[AddRating]    Script Date: 20/06/2023 23:38:46 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:       MATEUS CERQUEIRA
+-- Create date: FEB 2023
+-- Description:    Add Ingredient
+-- =============================================
+CREATE PROCEDURE [dbo].[AddRating]
+    -- Add the parameters for the stored procedure here
+    @Ratings AS INT,
+	@RecipeId AS INT,
+	@Comment AS VARCHAR(MAX) NULL,
+	@AuthorId AS INT
+AS
+BEGIN
+INSERT INTO Rating(Ratings, RecipeId, Comment, AuthorId)
+VALUES(@Ratings, @RecipeId, @Comment, @AuthorId)
+END
+GO
+/****** Object:  StoredProcedure [dbo].[AddRecipe]    Script Date: 20/06/2023 23:38:46 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:       MATEUS CERQUEIRA
+-- Create date: FEB 2023
+-- Description:    Add Recipe User
+-- =============================================
+CREATE   PROCEDURE [dbo].[AddRecipe]
+    -- Add the parameters for the stored procedure here
+    @Title AS VARCHAR(50),
+    @Description AS VARCHAR(MAX),
+    @AuthorId AS INT,
+	@Data AS DATE,
+	@CategoryId AS INT,
+	@RatingId AS INT,
+	@PreparationTime AS DATETIME,
+	@Portions AS INT,
+	@ImageUrl AS VARCHAR(MAX),
+	@IsApproved AS BIT
+AS
+BEGIN
+INSERT INTO Recipe(Title, Description, AuthorId, Data, CategoryId, RatingId, PreparationTime, Portions, ImageUrl, IsApproved)
+VALUES(@Title, @Description, @AuthorId, @Data, @CategoryId, @RatingId, @PreparationTime, @Portions, @ImageUrl, @IsApproved)
+END
+GO
+/****** Object:  StoredProcedure [dbo].[AddTestemonials]    Script Date: 20/06/2023 23:38:46 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:       MATEUS CERQUEIRA
+-- Create date: FEB 2023
+-- Description:    Add Ingredient
+-- =============================================
+CREATE PROCEDURE [dbo].[AddTestemonials]
+    -- Add the parameters for the stored procedure here
+    @Name AS VARCHAR(50),
+	@Email AS VARCHAR(50),
+	@Massage AS VARCHAR(MAX),
+	@Data AS DATE
+AS
+BEGIN
+INSERT INTO Testimonials(Name, Email, Message, Data)
+VALUES(@Name, @Email, @Massage, @Data)
+END
+GO
+/****** Object:  StoredProcedure [dbo].[AddUser]    Script Date: 20/06/2023 23:38:46 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[AddUser] (@Username NVARCHAR(60), @Email NVARCHAR(60), @Password NVARCHAR(60), @UserBlocked bit, @UserAdmin bit, @ImageUrl VARCHAR(MAX))
+AS
+BEGIN
+
+INSERT INTO Users (Username, Email, Password, UserBlocked, UserAdmin, ImageUrl) VALUES (@Username, @Email, @Password, @UserBlocked, @UserAdmin, @ImageUrl)
+
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[GetAllCategory]    Script Date: 20/06/2023 23:38:46 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[GetAllCategory]
+AS
+BEGIN
+
+SELECT * FROM Category
+
+END
+GO
+/****** Object:  StoredProcedure [dbo].[GetAllFavorite]    Script Date: 20/06/2023 23:38:46 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[GetAllFavorite]
+	-- Add the parameters for the stored procedure here
+
+AS
+BEGIN
+	 SELECT *
+	 FROM Favorite;
+END
+GO
+/****** Object:  StoredProcedure [dbo].[GetAllFriends]    Script Date: 20/06/2023 23:38:46 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[GetAllFriends]
+AS
+BEGIN
+
+SELECT * FROM Friends
+
+END
+GO
+/****** Object:  StoredProcedure [dbo].[GetAllIngredients]    Script Date: 20/06/2023 23:38:46 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[GetAllIngredients]
+AS
+BEGIN
+
+SELECT * FROM Ingredient
+
+END
+GO
+/****** Object:  StoredProcedure [dbo].[GetAllListIngredients]    Script Date: 20/06/2023 23:38:46 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[GetAllListIngredients]
+AS
+BEGIN
+
+SELECT * FROM L_Ingredients
+
+END
+GO
+/****** Object:  StoredProcedure [dbo].[GetAllMeasures]    Script Date: 20/06/2023 23:38:46 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[GetAllMeasures]
+AS
+BEGIN
+
+SELECT * FROM Measures
+
+END
+GO
+/****** Object:  StoredProcedure [dbo].[GetAllProducts]    Script Date: 20/06/2023 23:38:46 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[GetAllProducts]
+AS
+BEGIN
+
+SELECT * FROM Product
+
+END
+GO
+/****** Object:  StoredProcedure [dbo].[GetAllRatings]    Script Date: 20/06/2023 23:38:46 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[GetAllRatings]
+AS
+BEGIN
+
+SELECT * FROM Rating
+
+END
+GO
+/****** Object:  StoredProcedure [dbo].[GetAllRecipes]    Script Date: 20/06/2023 23:38:46 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[GetAllRecipes]
+AS
+BEGIN
+
+SELECT * FROM Recipe
+
+END
+GO
+/****** Object:  StoredProcedure [dbo].[GetAllTestemonials]    Script Date: 20/06/2023 23:38:46 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[GetAllTestemonials]
+AS
+BEGIN
+
+SELECT * FROM Testimonials
+
+END
+GO
+/****** Object:  StoredProcedure [dbo].[GetAllUsers]    Script Date: 20/06/2023 23:38:46 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[GetAllUsers]
+AS
+BEGIN
+
+SELECT * FROM Users
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[GetCategoryById]    Script Date: 20/06/2023 23:38:46 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[GetCategoryById]
+	@Id AS INT
+AS
+BEGIN
+
+SELECT * FROM Category
+WHERE Id = @Id
+
+END
+GO
+/****** Object:  StoredProcedure [dbo].[GetFavoriteByIdUser]    Script Date: 20/06/2023 23:38:46 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[GetFavoriteByIdUser] 
+-- Add the parameters for the stored procedure here
+	@UserId AS INT
+AS
+BEGIN
+	
+	SELECT *
+	FROM Favorite
+	WHERE UserId = @UserId
+END
+GO
+/****** Object:  StoredProcedure [dbo].[GetFriendById]    Script Date: 20/06/2023 23:38:46 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[GetFriendById]
+	@UserTwo AS INT
+AS
+BEGIN
+
+SELECT * FROM Friends WHERE UserTwo = @UserTwo
+
+END
+GO
+/****** Object:  StoredProcedure [dbo].[GetFriendByUserIds]    Script Date: 20/06/2023 23:38:46 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[GetFriendByUserIds]
+	@UserOne AS INT,
+	@UserTwo AS INT
+AS
+BEGIN
+
+SELECT * FROM Friends WHERE UserOne = @UserOne AND UserTwo = @UserTwo
+END
+GO
+/****** Object:  StoredProcedure [dbo].[GetFriendUserById]    Script Date: 20/06/2023 23:38:46 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[GetFriendUserById]
+	@UserTwo AS INT
+AS
+BEGIN
+
+SELECT * FROM Friends WHERE UserTwo = @UserTwo
+END
+GO
+/****** Object:  StoredProcedure [dbo].[GetIngredientById]    Script Date: 20/06/2023 23:38:46 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[GetIngredientById]
+	@Id AS INT
+AS
+BEGIN
+
+SELECT * FROM Ingredient
+
+END
+GO
+/****** Object:  StoredProcedure [dbo].[GetIngredientByRecipeId]    Script Date: 20/06/2023 23:38:46 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[GetIngredientByRecipeId]
+    @RecipeId INT
+AS
+BEGIN
+
+SELECT L_Ingredients.*, Ingredient.Name, Measures.Unit  FROM L_Ingredients
+inner join Ingredient on L_Ingredients.IngredientId = Ingredient.Id
+inner join Measures on L_Ingredients.MeasureId = Measures.Id
+WHERE RecipeId = @RecipeId
+
+END
+GO
+/****** Object:  StoredProcedure [dbo].[GetMeasureById]    Script Date: 20/06/2023 23:38:46 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[GetMeasureById]
+	-- Add the parameters for the stored procedure here
+	@Id AS INT 
+AS
+BEGIN
+	
+	SELECT *
+	FROM Measures
+	WHERE Id = @Id;
+END
+GO
+/****** Object:  StoredProcedure [dbo].[GetProductById]    Script Date: 20/06/2023 23:38:46 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[GetProductById]
+	@Id AS INT
+AS
+BEGIN
+
+SELECT * FROM Product
+WHERE Id = @Id
+
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[GetQuantityById]    Script Date: 20/06/2023 23:38:46 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[GetQuantityById]
+    @IngredientId int
+AS
+BEGIN
+    SELECT Quantity
+    FROM LIngredients
+    WHERE IngredientId = @IngredientId
+END
+GO
+/****** Object:  StoredProcedure [dbo].[GetRatingByID]    Script Date: 20/06/2023 23:38:46 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[GetRatingByID]
+	@RatingID AS INT
+AS
+BEGIN
+
+SELECT * FROM Rating
+WHERE RatingID = @RatingID
+
+END
+GO
+/****** Object:  StoredProcedure [dbo].[GetRatingByIdRecipe]    Script Date: 20/06/2023 23:38:46 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[GetRatingByIdRecipe]
+	@RecipeId AS INT
+AS
+BEGIN
+
+SELECT * FROM Rating WHERE RecipeId = @RecipeId
+
+END
+GO
+/****** Object:  StoredProcedure [dbo].[GetRecipeById]    Script Date: 20/06/2023 23:38:46 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[GetRecipeById]
+	@Id AS INT
+AS
+BEGIN
+
+SELECT * FROM Recipe
+WHERE Id = @Id
+
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[GetTestemonialsById]    Script Date: 20/06/2023 23:38:46 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[GetTestemonialsById]
+	@Id AS INT
+AS
+BEGIN
+
+SELECT * FROM Testimonials
+WHERE Id = @Id
+
+END
+GO
+/****** Object:  StoredProcedure [dbo].[GetUserById]    Script Date: 20/06/2023 23:38:46 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[GetUserById]
+	@Id AS INT
+AS
+BEGIN
+
+SELECT * FROM Users
+WHERE Id = @Id
+
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[GetUserLogin]    Script Date: 20/06/2023 23:38:46 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[GetUserLogin]
+	@Email AS VARCHAR(50),
+	@Password AS VARCHAR(50)
+AS
+BEGIN
+
+SELECT * FROM Users
+WHERE 
+Email = @Email 
+AND Password = @Password
+
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[LastRecipe]    Script Date: 20/06/2023 23:38:46 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		<Author,,Name>
+-- Create date: <Create Date,,>
+-- Description:	<Description,,>
+-- =============================================
+CREATE PROCEDURE [dbo].[LastRecipe]
+	-- Add the parameters for the stored procedure here
+
+AS
+BEGIN
+	SELECT TOP 1 *
+	FROM RECIPE 
+	ORDER BY Id DESC
+END
+GO
+/****** Object:  StoredProcedure [dbo].[RecipesApproved]    Script Date: 20/06/2023 23:38:46 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[RecipesApproved]
+AS
+BEGIN
+	SELECT * 
+	FROM Recipe
+	WHERE IsApproved = 1
+END
+GO
+/****** Object:  StoredProcedure [dbo].[RecipesApprovedById]    Script Date: 20/06/2023 23:38:46 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[RecipesApprovedById]
+	@AuthorId AS INT
+AS
+BEGIN
+	SELECT * 
+	FROM Recipe
+	WHERE IsApproved = 1 AND AuthorId = @AuthorId
+END
+GO
+/****** Object:  StoredProcedure [dbo].[RecipesUnapproved]    Script Date: 20/06/2023 23:38:46 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[RecipesUnapproved]
+AS
+BEGIN
+	SELECT * 
+	FROM Recipe
+	WHERE IsApproved = 0
+END
+GO
+/****** Object:  StoredProcedure [dbo].[UpdateRecipe]    Script Date: 20/06/2023 23:38:46 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[UpdateRecipe]
+	@Id INT,
+    @Title AS VARCHAR(50),
+    @Description AS VARCHAR(MAX),
+    @AuthorId AS INT,
+	@Data AS DATE,
+	@CategoryId AS INT,
+	@RatingId AS INT,
+	@PreparationTime AS DATETIME,
+	@Portions AS INT,
+	@ImageUrl AS VARCHAR(MAX),
+	@IsApproved AS BIT
+AS
+BEGIN
+    UPDATE Recipe 
+    SET 
+        Title = @Title,
+        Description = @Description,
+        AuthorId = @AuthorId,
+        Data = @Data,
+        CategoryId = @CategoryId,
+		RatingId = @RatingId,
+        PreparationTime = @PreparationTime,
+        Portions = @Portions,
+		ImageUrl = @ImageUrl,
+		IsApproved = @IsApproved
+    WHERE Id = @Id
+END
+GO
+/****** Object:  StoredProcedure [dbo].[UpdateUser]    Script Date: 20/06/2023 23:38:46 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[UpdateUser]
+    @Id INT,
+    @Username VARCHAR(50),
+    @email VARCHAR(50),
+    @password VARCHAR(50),
+    @userBlocked BIT,
+    @userAdmin BIT,
+	@ImageUrl AS VARCHAR(MAX)
+AS
+BEGIN
+    UPDATE Users 
+    SET 
+        Username = @Username,
+        Email = @Email,
+        Password = @Password,
+        UserBlocked = @UserBlocked,
+        UserAdmin = @UserAdmin,
+		ImageUrl = @ImageUrl
+    WHERE Id = @Id
+END
+GO
+USE [master]
+GO
+ALTER DATABASE [DolciCerqueira] SET  READ_WRITE 
+GO

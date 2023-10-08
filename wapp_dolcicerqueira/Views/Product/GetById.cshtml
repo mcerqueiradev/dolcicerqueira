@@ -1,0 +1,142 @@
+﻿@model wapp_dolcicerqueira.Models.AllModels
+
+@{
+    ViewData["Title"] = "GetById";
+}
+
+<a asp-area="" asp-controller="Home" asp-action="Index" class="fixed bg-pink rounded-full bottom-4 left-4 p-3 opacity-60 hover:opacity-100 transition-opacity">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-white">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+    </svg>
+</a>
+
+<div class="relative mx-auto max-w-screen-xl font-poppins z-0">
+    <div class="grid grid-cols-1 items-start gap-8 md:grid-cols-2 bg-white rounded-3xl p-10">
+        <div class="grid grid-cols-2 gap-4 md:grid-cols-1">
+            <img alt="" src="/assets/cake.png" class="aspect-square w-full rounded-3xl object-cover" />
+        </div>
+
+        <div class="sticky top-0">
+            <strong class="border-pink-600 bg-gray-100 text-pink-600 rounded-full border px-3 py-0.5 text-xs font-medium tracking-wide"> Pre Order </strong>
+
+            <div class="mt-8 flex justify-between">
+                <div class="max-w-[50ch] space-y-2">
+                    <h1 class="text-3xl font-bold text-pink">@Model.Product.Name</h1>
+                </div>
+
+                <p class="text-3xl font-bold">@Model.Product.Price &euro;</p>
+            </div>
+
+            <div class="mt-4">
+                <div class="prose max-w-none text-base leading-7">
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa veniam dicta beatae eos ex error culpa delectus rem tenetur, architecto quam nesciunt, dolor veritatis nisi minus inentore, rerum at recusandae?</p>
+                </div>
+            </div>
+
+            <form class="mt-6">
+                <fieldset class="mb-8">
+                    <legend class="mb-1 text-sm font-medium">Cake Batter</legend>
+
+                    <div class="flex flex-wrap gap-1">
+                        <label for="color_tt" class="cursor-pointer">
+                            <input type="radio" name="color" id="color_tt" class="peer sr-only" />
+
+                            <span class="peer-checked:border-pink group inline-block rounded-full border-2 border-textcolor text-textcolor px-3 py-1 text-xs font-semibold peer-checked:text-pink hover:border-pink hover:text-pink">Chocolate</span>
+                        </label>
+
+                        <label for="color_fr" class="cursor-pointer">
+                            <input type="radio" name="color" id="color_fr" class="peer sr-only" />
+
+                            <span class="peer-checked:border-pink group inline-block rounded-full border-2 border-textcolor text-textcolor px-3 py-1 text-xs font-semibold peer-checked:text-pink hover:border-pink hover:text-pink">Dark Chocolate</span>
+                        </label>
+
+                        <label for="color_cb" class="cursor-pointer">
+                            <input type="radio" name="color" id="color_cb" class="peer sr-only" />
+
+                            <span class="peer-checked:border-pink group inline-block rounded-full border-2 border-textcolor text-textcolor px-3 py-1 text-xs font-semibold peer-checked:text-pink hover:border-pink hover:text-pink">Cocoa</span>
+                        </label>
+                    </div>
+                </fieldset>
+
+                <fieldset class="mb-6">
+                    <legend class="mb-1 text-sm font-medium">Cake Filling</legend>
+
+                    <div class="flex flex-wrap gap-1">
+                        <label for="filling_tt" class="cursor-pointer">
+                            <input type="radio" name="filling" id="filling_tt" class="peer sr-only" />
+
+                            <span class="peer-checked:border-pink group inline-block rounded-full border-2 border-textcolor text-textcolor px-3 py-1 text-xs font-semibold peer-checked:text-pink hover:border-pink hover:text-pink">Chocolate</span>
+                        </label>
+
+                        <label for="filling_fr" class="cursor-pointer">
+                            <input type="radio" name="filling" id="filling_fr" class="peer sr-only" />
+
+                            <span class="peer-checked:border-pink group inline-block rounded-full border-2 border-textcolor text-textcolor px-3 py-1 text-xs font-semibold peer-checked:text-pink hover:border-pink hover:text-pink">White Chocolate</span>
+                        </label>
+
+                        <label for="filling_cb" class="cursor-pointer">
+                            <input type="radio" name="filling" id="filling_cb" class="peer sr-only" />
+
+                            <span class="peer-checked:border-pink group inline-block rounded-full border-2 border-textcolor text-textcolor px-3 py-1 text-xs font-semibold peer-checked:text-pink hover:border-pink hover:text-pink">Strawberry</span>
+                        </label>
+
+                        <label for="filling_cb" class="cursor-pointer">
+                            <input type="radio" name="filling" id="filling_cb" class="peer sr-only" />
+
+                            <span class="peer-checked:border-pink group inline-block rounded-full border-2 border-textcolor text-textcolor px-3 py-1 text-xs font-semibold peer-checked:text-pink hover:border-pink hover:text-pink">Passion Fruit</span>
+                        </label>
+                    </div>
+                </fieldset>
+
+                <fieldset class="mt-4">
+                    <legend class="mb-1 text-sm font-medium">Size</legend>
+
+                    <div class="flex flex-wrap gap-1">
+                        <label for="size_xs" class="cursor-pointer">
+                            <input type="radio" name="size" id="size_xs" class="peer sr-only" />
+
+                            <span class="inline-flex h-16 w-16 items-center justify-center rounded-3xl border-2 border-textcolor text-xs peer-checked:text-pink peer-checked:border-pink mr-2 text-textcolor font-semibold hover:border-pink hover:text-pink selected:border-pink">4 IN </span>
+                        </label>
+
+                        <label for="size_s" class="cursor-pointer">
+                            <input type="radio" name="size" id="size_s" class="peer sr-only" />
+
+                            <span class="inline-flex h-16 w-16 items-center justify-center rounded-3xl border-2 border-textcolor text-xs peer-checked:text-pink peer-checked:border-pink mr-2 text-textcolor font-semibold hover:border-pink hover:text-pink selected:border-pink">6 IN </span>
+                        </label>
+
+                        <label for="size_m" class="cursor-pointer">
+                            <input type="radio" name="size" id="size_m" class="peer sr-only" />
+
+                            <span class="inline-flex h-16 w-16 items-center justify-center rounded-3xl border-2 border-textcolor text-xs peer-checked:text-pink peer-checked:border-pink mr-2 text-textcolor font-semibold hover:border-pink hover:text-pink selected:border-pink">7,8 IN</span>
+                        </label>
+
+                        <label for="size_l" class="cursor-pointer">
+                            <input type="radio" name="size" id="size_l" class="peer sr-only" />
+
+                            <span class="inline-flex h-16 w-16 items-center justify-center rounded-3xl border-2 border-textcolor text-xs peer-checked:text-pink peer-checked:border-pink mr-2 text-textcolor font-semibold hover:border-pink hover:text-pink selected:border-pink">9,8 IN</span>
+                        </label>
+
+                    </div>
+                </fieldset>
+
+                <div class="mt-8 flex gap-4">
+                    <button type="submit" class="bg-pink hover:bg-pink block rounded-full px-5 py-3 text-base font-semibold text-white">Add to Cart</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script type='text/javascript'>
+    //<![CDATA[
+
+    window.addEventListener('load', function() {
+        var header = document.getElementById('header');
+        header.style.display = 'none';
+    });
+    window.addEventListener('load', function() {
+        var logoutButton = document.getElementById('logout-h');
+        logoutButton.style.display = 'none';
+    });
+                            //]]>
+</script>
