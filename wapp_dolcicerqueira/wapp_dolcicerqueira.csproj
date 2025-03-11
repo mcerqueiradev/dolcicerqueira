@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <UserSecretsId>579e53d8-c3cd-46d2-a84c-dfac81fd7e5b</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
   </PropertyGroup>
 
 	<ItemGroup>
@@ -15,6 +17,7 @@
 
 	<ItemGroup>
 	  <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="7.0.4" />
+	  <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.6" />
 	  <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
 	  <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
 	</ItemGroup>
