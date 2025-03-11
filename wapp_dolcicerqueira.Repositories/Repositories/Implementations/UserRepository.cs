@@ -1,9 +1,9 @@
-﻿using wapp_dolcicerqueira.Domain.Entities;
-using wapp_dolcicerqueira.Repositories.Interfaces;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using wapp_dolcicerqueira.Domain.Entities;
+using wapp_dolcicerqueira.Repositories.Interfaces;
 
 namespace wapp_dolcicerqueira.Repositories.Implementations
 {

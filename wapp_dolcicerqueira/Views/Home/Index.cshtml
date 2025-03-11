@@ -5,74 +5,39 @@
 }
 @model wapp_dolcicerqueira.Models.AllModels
 
-<div class="grid h-screen grid-cols-12 font-poppins">
-    <div class="relative h-screen col-span-3 bg-lightpink/40">
-        <div class="flex h-80 flex-col items-start justify-center bg-pink p-10">
-            <h5 class="mb-4 font-rubik text-xs font-medium tracking-widest text-lightpink">DOLCI CERQUEIRA</h5>
-            <h3 class="text-2xl font-semibold text-white">The best Brazilian</h3>
-            <h3 class="text-2xl font-semibold text-white">pastry recipes</h3>
-        </div>
-        @*        <div class="flex h-fit">
-        <video autoplay loop muted playsInline src="../assets/cake.mp4"></video>
-        </div>*@
-    </div>
-    <div class="relative h-screen col-span-9 bg-lightpink/20">
-        <div class="flex items-center justify-between bg-lightpink h-28 px-10">
-            <ul class="flex space-x-10">
-                <li>
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6 text-white transition-all hover:text-pink">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-                    </svg>
-                </li>
-                <li>
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6 text-white transition-all hover:text-pink">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 21l5.25-11.25L21 21m-9-3h7.5M3 5.621a48.474 48.474 0 016-.371m0 0c1.12 0 2.233.038 3.334.114M9 5.25V3m3.334 2.364C11.176 10.658 7.69 15.08 3 17.502m9.334-12.138c.896.061 1.785.147 2.666.257m-4.589 8.495a18.023 18.023 0 01-3.827-5.802" />
-                    </svg>
-                </li>
-            </ul>
 
-            <ul class="flex items-center space-x-10">
-                <li>
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6 text-white transition-all hover:text-pink">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
-                    </svg>
-                </li>
-                @if (AllModels.UserCheck != null)
-                {
-                    <a asp-area="" asp-controller="Home" asp-action="Dashboard" class="hover:no-underline">
-                        <h2 class="text-xs text-white">Hello, <span class="font-medium">@AllModels.UserCheck.Username</span></h2>
-                    </a>
-                }
-                else
-                {
-                    <a class="bg-pink text-sm text-semibold whitespace-no-wrap block px-4 py-2 hover:no-underline " asp-controller="Login" asp-action="Index">Sign in</a>
-                    <a class="bg-lightpink text-sm text-semibold whitespace-no-wrap block px-4 py-2 hover:no-underline" asp-controller="User" asp-action="CreateAccount">Sign up</a>
-                }
-            </ul>
-        </div>
-
-        <div class="flex flex-row p-20">
-            <div class="grid grid-cols-2 gap-10">
-                <div class="col-span-1">
-                    <h1 class="text-5xl font-bold">Experience the irresistible taste of Brazilian cakes.</h1>
-                </div>
-                <div class="col-span-1">
-                    <div class="grid grid-cols-2 gap-5">
-                        <div class="bg-lightpink/30 rounded-3xl p-5">aaa</div>
-                        <div class="relative aspect-square rounded-3xl p-5 justify-between flex flex-col overflow-hidden">
-                            <span class="z-10 font-rubik text-xs tracking-wider uppercase text-white">Latest Count</span>
-                            <h1 class="z-10 text-xl font-semibold text-white">Our website has 234 recipes</h1>
-                            <video class="z-0 absolute w-full top-0 left-0" autoplay loop muted playsInline src="../assets/cake.mp4"></video>
-                        </div>
-                        <div class="bg-lightpink/30 rounded-3xl p-5">aaa</div>
-                        <div class="bg-gradient-to-r from-pink to-pink/80  aspect-video flex-1 rounded-3xl p-5">aaaa</div>
-                    </div>
-                </div>
-            </div>
+<section class="text-gray-600 font-poppins h-screen flex relative">
+    <div class="container mx-auto flex px-5 py-12 items-center justify-center flex-col">
+        <div class="lg:w-2/3 w-full pb-20">
+            <!-- Change the heading text -->
+            <h1 class="md:text-6xl text-3xl mb-2 font-bold text-pink tracking-tight leading-tight">
+                Hello, welcome to Dolci Cerqueira.
+            </h1>
+            <!-- Change the subheading text -->
+            <h1 class="md:text-6xl text-3xl mb-4 font-bold text-lightpink tracking-tight leading-tight">
+                We have the best Brazillian Cakes.
+            </h1>
+            <!-- Change the paragraph text -->
+            @if (AllModels.UserCheck != null)
+            {
+                <a asp-area="" asp-controller="Home" asp-action="Dashboard" class="hover:no-underline text-gray-600 text-xs">Hello, <span class="font-medium">@AllModels.UserCheck.Username</span></a>
+            }
+            else
+            {
+                <a class="bg-pink text-sm font-semibold px-4 py-2 hover:no-underline rounded-lg text-white" asp-controller="Login" asp-action="Index">Sign in</a>
+                <a class="bg-lightpink text-sm font-semibold px-4 py-2 hover:no-underline rounded-lg text-white" asp-controller="User" asp-action="CreateAccount">Sign up</a>
+            }
+     
         </div>
     </div>
-</div>
-
+    <a class="absolute block mx-auto text-xl md:mt-96 bottom-0 left-1/2 -ml-10 mt-80">
+        <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd"
+                  d="M21.1716 29.1716C22.7337 27.6095 25.2663 27.6095 26.8284 29.1716L40 42.3431L53.1716 29.1716C54.7337 27.6095 57.2663 27.6095 58.8284 29.1716C60.3905 30.7337 60.3905 33.2663 58.8284 34.8284L42.8284 50.8284C41.2663 52.3905 38.7337 52.3905 37.1716 50.8284L21.1716 34.8284C19.6095 33.2663 19.6095 30.7337 21.1716 29.1716Z"
+                  fill="#FFFFFF"></path>
+        </svg>
+    </a>
+</section>
 
 <div class="p-20 font-poppins">
 
